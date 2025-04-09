@@ -123,7 +123,7 @@ class TestMemoizeSimple(unittest.TestCase):
         self.assertEqual(call_count, 2)
         
         # Check that cache info is available
-        info = test_func.cache()
+        info = test_func.cache_info()
         self.assertEqual(info.hits, 1)  # We've had one cache hit
         self.assertEqual(info.misses, 2)  # And two cache misses
 
