@@ -151,5 +151,134 @@ class TestUtilsPy3(unittest.TestCase):
         # Clean up
         os.unlink(test_pickle)
 
+    def test_timing(self):
+        """Test timing utilities."""
+        from mcdp_utils_misc.timing import timeit, timeit_wall
+        import time
+        from io import StringIO
+        from contextlib import redirect_stdout
+        
+        # Test timeit
+        # Capture the output
+        output = StringIO()
+        
+        # Define a dummy logger
+        class DummyLogger:
+            def debug(self, msg):
+                print(msg)
+        
+        # Use timeit with our dummy logger
+        with redirect_stdout(output):
+            with timeit("test operation", logger=DummyLogger()):
+                # Simulate work
+                for _ in range(10000):
+                    pass
+        
+        # Check that the output contains expected text
+        result = output.getvalue()
+        self.assertIn("timeit result:", result)
+        self.assertIn("for test operation", result)
+        
+        # Test timeit_wall
+        output = StringIO()
+        with redirect_stdout(output):
+            with timeit_wall("test wall operation", logger=DummyLogger()):
+                # Sleep for a predictable amount of time
+                time.sleep(0.01)
+        
+        # Check that the output contains expected text
+        result = output.getvalue()
+        self.assertIn("timeit test wall operation", result)
+        self.assertIn("timeit result:", result)
+    
+    def test_locate_files(self):
+        """Test locate_files function."""
+        from mcdp_utils_misc.locate_files_imp import locate_files
+        
+        # Create a temporary directory structure
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            # Create some files
+            file1 = os.path.join(tmp_dir, "test1.txt")
+            file2 = os.path.join(tmp_dir, "test2.log")
+            subdir = os.path.join(tmp_dir, "subdir")
+            os.mkdir(subdir)
+            file3 = os.path.join(subdir, "test3.txt")
+            
+            # Create the files
+            for filename in [file1, file2, file3]:
+                with open(filename, 'w') as f:
+                    f.write("test")
+            
+            # Test finding txt files
+            files = locate_files(tmp_dir, "*.txt")
+            self.assertEqual(len(files), 2)
+            
+            # Test finding all files
+            files = locate_files(tmp_dir, "*.*")
+            self.assertEqual(len(files), 3)
+            
+            # Test finding files with specific pattern
+            files = locate_files(tmp_dir, ["*.txt", "*.log"])
+            self.assertEqual(len(files), 3)
+    
+    def test_memo_disk_cache(self):
+        """Test memo_disk_cache2 function."""
+        from mcdp_utils_misc.memos_selection import memo_disk_cache2
+        
+        # Create a temporary directory for the cache
+        with tempfile.TemporaryDirectory() as tmp_dir:
+            cache_file = os.path.join(tmp_dir, "cache.pickle")
+            
+            # Define a function to memoize
+            call_count = 0
+            def expensive_func():
+                nonlocal call_count
+                call_count += 1
+                return "result"
+            
+            # Call the function with memoization
+            data = "test_data"
+            result = memo_disk_cache2(cache_file, data, expensive_func)
+            self.assertEqual(result, "result")
+            self.assertEqual(call_count, 1)
+            
+            # Call again with the same data - should use cache
+            result = memo_disk_cache2(cache_file, data, expensive_func)
+            self.assertEqual(result, "result")
+            self.assertEqual(call_count, 1)  # Should not have incremented
+            
+            # Call with different data - should recompute
+            result = memo_disk_cache2(cache_file, "different_data", expensive_func)
+            self.assertEqual(result, "result")
+            self.assertEqual(call_count, 2)  # Should have incremented
+    
+    def test_good_identifiers(self):
+        """Test good_identifiers module."""
+        from mcdp_utils_misc.good_identifiers import is_good_plain_identifier
+        
+        # Valid identifiers
+        self.assertTrue(is_good_plain_identifier("valid"))
+        self.assertTrue(is_good_plain_identifier("Valid"))
+        self.assertTrue(is_good_plain_identifier("valid_name"))
+        self.assertTrue(is_good_plain_identifier("valid_name_123"))
+        self.assertTrue(is_good_plain_identifier("_valid"))
+        
+        # Invalid identifiers
+        self.assertFalse(is_good_plain_identifier("123invalid"))
+        self.assertFalse(is_good_plain_identifier("invalid-name"))
+        self.assertFalse(is_good_plain_identifier("invalid.name"))
+        self.assertFalse(is_good_plain_identifier("invalid name"))
+        self.assertFalse(is_good_plain_identifier(""))
+        
+    def test_dir_from_package_name(self):
+        """Test dir_from_package_name function."""
+        from mcdp_utils_misc.dir_from_package_nam import dir_from_package_name
+        
+        # Test with a known package
+        # We'll use the mcdp package itself since we know it exists
+        path = dir_from_package_name("mcdp")
+        self.assertTrue(os.path.exists(path))
+        self.assertTrue(os.path.isdir(path))
+
 if __name__ == '__main__':
     unittest.main()

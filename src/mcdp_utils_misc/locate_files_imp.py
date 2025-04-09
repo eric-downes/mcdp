@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
 import fnmatch
 import os
+import time
+import sys
+
+# defaultdict is in collections, not collections.abc
+from collections import defaultdict
 
 from contracts import contract
 from mcdp import MCDPConstants, logger
-import time
 from contracts.utils import check_isinstance
 
 
@@ -103,6 +106,5 @@ def locate_files(directory, pattern, followlinks=True,
     if seconds > 0.2:
         n = len(filenames)
         nuniques = len(set(filenames))
-        logger.debug('%.4f s for locate_files(%s,%s): %d traversed, found %d filenames (%d uniques)' % 
-              (seconds, directory, pattern, ntraversed, n, nuniques))
+        logger.debug(f'{seconds:.4f} s for locate_files({directory},{pattern}): {ntraversed} traversed, found {n} filenames ({nuniques} uniques)')
     return filenames
