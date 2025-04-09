@@ -20,13 +20,8 @@ except ImportError:
 
 import traceback
 
-# Try to import describe_type from contracts, if it fails, use a simple fallback
-try:
-    from contracts.interface import describe_type
-except ImportError:
-    # Simple fallback
-    def describe_type(obj):
-        return str(type(obj).__name__)
+# Import describe_type directly from contracts
+from contracts.interface import describe_type
 
 from mcdp import logger
 

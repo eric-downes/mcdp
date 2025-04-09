@@ -1,10 +1,6 @@
 # -*- coding: utf-8 -*-
-# Try to import the original indent function from contracts
-# If it fails, use our own implementation
-try:
-    from contracts.utils import indent
-except ImportError:
-    from .indent_utils import indent
+# Now that we have fixed PyContracts for Python 3, we can import directly
+from contracts.utils import indent
 
 def indent_plus_invisibles(x, c='  |'):
     return indent(make_chars_visible(x), c)

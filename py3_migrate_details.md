@@ -36,23 +36,24 @@ The migration is in progress with the following achievements:
 ### Current Challenges
 
 1. **Dependency Issues**
-   - PyContracts package is incompatible with Python 3 (uses deprecated `inspect.ArgSpec`)
+   - ~~PyContracts package is incompatible with Python 3~~ ✅ Fixed via fork with Python 3.8+ compatibility
    - Import chains make isolated testing difficult
    - Some tests need to directly load modules to avoid import errors
+   - The `quickapp` dependency uses the deprecated `imp` module and needs updating
 
 2. **Import Structure**
    - Core modules import from many submodules, creating dependency chains
-   - Need to create fallbacks for most import paths
+   - ~~Need to create fallbacks for most import paths~~ ✅ Removed PyContracts fallbacks now that it's fixed
    - Module initialization order is critical
 
 3. **String/Bytes Handling**
-   - Need to handle conversions between strings and bytes consistently
-   - Functions expecting bytes need proper encoding from strings
+   - ~~Need to handle conversions between strings and bytes consistently~~ ✅ Updated several utility modules
+   - ~~Functions expecting bytes need proper encoding from strings~~ ✅ Added proper encoding support
 
 4. **Iterator/Sequence API Changes**
-   - `xrange` vs `range` differences
-   - `.next()` vs `__next__()` methods
-   - Dictionary views vs lists for keys/values/items
+   - ~~`xrange` vs `range` differences~~ ✅ Handled in updated modules
+   - ~~`.next()` vs `__next__()` methods~~ ✅ Handled in updated modules
+   - ~~Dictionary views vs lists for keys/values/items~~ ✅ Handled in updated modules
 
 ### Migration Strategy
 
