@@ -37,9 +37,10 @@ The migration is in progress with the following achievements:
 
 1. **Dependency Issues**
    - ~~PyContracts package is incompatible with Python 3~~ ✅ Fixed via fork with Python 3.8+ compatibility
+   - ~~The `quickapp` dependency uses the deprecated `imp` module~~ ✅ Fixed via patched compmake dependency
    - Import chains make isolated testing difficult
    - Some tests need to directly load modules to avoid import errors
-   - The `quickapp` dependency uses the deprecated `imp` module and needs updating
+   - Some warning about `zuper_commons.logs.ZLogger` not found (non-critical with STRICT_DEPENDENCIES=False)
 
 2. **Import Structure**
    - Core modules import from many submodules, creating dependency chains
