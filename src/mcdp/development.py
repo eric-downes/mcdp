@@ -1,9 +1,24 @@
 # -*- coding: utf-8 -*-
 import getpass
+import warnings
+import functools
 
-from contracts import all_disabled
+# Try to import all_disabled from contracts, fall back to a safe default if not available
+try:
+    from contracts import all_disabled
+except ImportError:
+    # If contracts cannot be imported, provide a fallback
+    warnings.warn("contracts module not available, using fallback implementation")
+    def all_disabled():
+        return True
 
-from mcdp_utils_misc import memoize_simple
+# Try to import memoize_simple, fall back to a simple implementation if not available
+try:
+    from mcdp_utils_misc import memoize_simple
+except ImportError:
+    # Fallback implementation of memoize_simple using functools.lru_cache
+    warnings.warn("mcdp_utils_misc.memoize_simple not available, using fallback implementation")
+    memoize_simple = functools.lru_cache(maxsize=None)
 
 
 # import warnings
@@ -17,7 +32,7 @@ def do_extra_checks():
     """ True if we want to do extra paranoid checks for functions. """
     res = not all_disabled()
 #     if _storage.first:
-#         # logger.info('do_extra_checks: %s' % res)
+#         # logger.info(f'do_extra_checks: {res}')
 #         pass
 #     _storage.first = False
     return res

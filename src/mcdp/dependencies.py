@@ -2,7 +2,11 @@
 """ Checks that all important dependencies are installed """
 from .logs import logger
 
-__all__ = []
+__all__ = ['STRICT_DEPENDENCIES']
+
+# Set this to True to enforce strict dependency checking (i.e., fail on missing dependencies)
+# During Python 3 migration, this is set to False to allow testing to proceed
+STRICT_DEPENDENCIES = False
 
 
 def suggest_package(name): # pragma: no cover
@@ -18,7 +22,10 @@ try:
     import quickapp  # @UnusedImport
 except ImportError as e:  # pragma: no cover
     logger.error(f"Dependency issue: {e}")
-    logger.warning("Continuing despite missing dependency. This may cause issues later.")
+    if STRICT_DEPENDENCIES:
+        raise Exception(f"Missing required dependency: {e}")
+    else:
+        logger.warning("Continuing despite missing dependency. This may cause issues later.")
 
 try:
     import numpy
@@ -27,32 +34,41 @@ try:
 except ImportError as e: # pragma: no cover
     logger.error(f"Numpy import error: {e}")
     suggest_package('python-numpy')
-    logger.warning("Continuing despite missing numpy. This may cause issues later.")
+    if STRICT_DEPENDENCIES:
+        raise Exception("Numpy not available")
+    else:
+        logger.warning("Continuing despite missing numpy. This may cause issues later.")
 
 try:
     from PIL import Image  # @UnusedImport @NoMove
 except ImportError as e:  # pragma: no cover
-    logger.error(e)
+    logger.error(f"PIL import error: {e}")
     suggest_package('python-pil')
     msg = 'PIL not available'
-    # raise Exception('PIL not available')
-    logger.error(msg)
-    # raise_wrapped(Exception, e, msg)
+    if STRICT_DEPENDENCIES:
+        raise Exception(msg)
+    else:
+        logger.error(msg)
 
 try:
     import matplotlib  # @UnusedImport @NoMove
 except ImportError as e: # pragma: no cover
-    logger.error(e)
+    logger.error(f"Matplotlib import error: {e}")
     suggest_package('python-matplotlib')
     msg = 'Matplotlib not available'
-    logger.error(msg)
-    # raise_wrapped(Exception, e, 'Matplotlib not available')
+    if STRICT_DEPENDENCIES:
+        raise Exception(msg)
+    else:
+        logger.error(msg)
 
 try:
     from ruamel import yaml  # @UnusedImport @NoMove
 except ImportError as e: # pragma: no cover
-    logger.error(e)
-    msg = 'rueml.yaml package not available'
-    logger.error(msg)
+    logger.error(f"ruamel.yaml import error: {e}")
+    msg = 'ruamel.yaml package not available'
+    if STRICT_DEPENDENCIES:
+        raise Exception(msg)
+    else:
+        logger.error(msg)
     
     

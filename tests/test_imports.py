@@ -56,6 +56,7 @@ if __name__ == "__main__":
         "mcdp.logs",
         "mcdp.constants",
         "mcdp.dependencies",
+        "mcdp.development",
         "mcdp"  # Test importing the main package
     ]
     
