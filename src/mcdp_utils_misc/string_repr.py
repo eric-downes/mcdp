@@ -1,8 +1,13 @@
 # -*- coding: utf-8 -*-
-from contracts.utils import indent
+# Try to import the original indent function from contracts
+# If it fails, use our own implementation
+try:
+    from contracts.utils import indent
+except ImportError:
+    from .indent_utils import indent
 
 def indent_plus_invisibles(x, c='  |'):
-    return indent(make_chars_visible(x),c)
+    return indent(make_chars_visible(x), c)
     
 def make_chars_visible(x):
     """ Replaces whitespaces ' ' and '\t' with '␣' and '⇥' """

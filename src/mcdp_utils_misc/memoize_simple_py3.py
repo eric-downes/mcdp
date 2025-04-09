@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
+"""
+Python 3 compatible version of the memoize_simple decorator.
+"""
 import functools
-from decorator import decorator
 
 def memoize_simple(obj):
     """
@@ -18,8 +20,9 @@ def memoize_simple(obj):
         Decorated function with caching
     """
     cache = obj.cache = {}
-
-    def memoizer(f, *args, **kwargs):
+    
+    @functools.wraps(obj)
+    def wrapper(*args, **kwargs):
         # Create a hashable key from args and kwargs
         # For kwargs, sort by key to ensure consistent ordering
         if kwargs:
@@ -32,7 +35,7 @@ def memoize_simple(obj):
             
         # Check if we have a cached result
         if key not in cache:
-            cache[key] = f(*args, **kwargs)
+            cache[key] = obj(*args, **kwargs)
         
         try:
             # Get cached result
@@ -42,33 +45,7 @@ def memoize_simple(obj):
             # Special case: if we get an ImportError when retrieving from cache,
             # assume the cached value is no longer valid (e.g., module was unloaded)
             del cache[key]
-            cache[key] = f(*args, **kwargs)
+            cache[key] = obj(*args, **kwargs)
             return cache[key]
 
-    # Use decorator from the decorator package to maintain function metadata
-    return decorator(memoizer, obj)
-
-# Alternative implementation using functools.lru_cache for better performance
-def memoize_simple_lru(func=None, maxsize=None):
-    """
-    Alternative implementation using functools.lru_cache.
-    
-    Args:
-        func: The function to decorate
-        maxsize: Maximum cache size (None means unlimited)
-        
-    Returns:
-        Decorated function with caching
-    """
-    def decorator(func):
-        cached_func = functools.lru_cache(maxsize=maxsize)(func)
-        # Attach the cache dictionary for compatibility
-        func.cache = cached_func.cache_info
-        return cached_func
-        
-    if func is None:
-        # Called with parameters: @memoize_simple_lru(maxsize=...)
-        return decorator
-    else:
-        # Called without parameters: @memoize_simple_lru
-        return decorator(func)
+    return wrapper

@@ -1,11 +1,32 @@
 # -*- coding: utf-8 -*-
-from StringIO import StringIO
-from pickle import (Pickler, SETITEM, MARK, SETITEMS, EMPTY_TUPLE, TUPLE, POP,
-    _tuplesize2code, POP_MARK)
+# Use io.StringIO for Python 3
+try:
+    # Python 2
+    from StringIO import StringIO
+except ImportError:
+    # Python 3
+    from io import StringIO
+
+# Handle pickle imports for Python 3
 import pickle
+from pickle import (Pickler, SETITEM, MARK, SETITEMS, EMPTY_TUPLE, TUPLE, POP, POP_MARK)
+# _tuplesize2code is a private attribute in pickle, which may not be available in Python 3
+# Create a fallback if it's not available
+try:
+    from pickle import _tuplesize2code
+except ImportError:
+    # Simple fallback that works for the common cases
+    _tuplesize2code = {1: pickle.TUPLE1, 2: pickle.TUPLE2, 3: pickle.TUPLE3}
+
 import traceback
 
-from contracts.interface import describe_type
+# Try to import describe_type from contracts, if it fails, use a simple fallback
+try:
+    from contracts.interface import describe_type
+except ImportError:
+    # Simple fallback
+    def describe_type(obj):
+        return str(type(obj).__name__)
 
 from mcdp import logger
 
@@ -74,12 +95,22 @@ class MyPickler(Pickler):
                 write(SETITEM)
             return
 
-        r = xrange(self._BATCHSIZE)
+        # Use range in Python 3, xrange in Python 2
+        try:
+            r = xrange(self._BATCHSIZE)  # Python 2
+        except NameError:
+            r = range(self._BATCHSIZE)  # Python 3
         while items is not None:
             tmp = []
             for _ in r:
                 try:
-                    tmp.append(items.next())
+                    # In Python 3, .next() was renamed to __next__()
+                    if hasattr(items, 'next'):
+                        # Python 2
+                        tmp.append(items.next())
+                    else:
+                        # Python 3
+                        tmp.append(next(items))
                 except StopIteration:
                     items = None
                     break
