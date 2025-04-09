@@ -35,7 +35,23 @@ def safe_pickle_dump(value, filename, protocol=pickle.HIGHEST_PROTOCOL,
 
 
 def safe_pickle_load(filename):
+    """
+    Load a pickle file safely, handling Python 2/3 differences.
+    
+    In Python 3, pickle.load() requires bytes-like object, not str,
+    and needs to handle encoding issues when loading pickles created in Python 2.
+    """
     # TODO: add debug check
     with safe_read(filename) as f:
-        return pickle.load(f)
+        try:
+            return pickle.load(f)
+        except UnicodeDecodeError:
+            # This may happen when loading Python 2 pickles in Python 3
+            if sys.version_info[0] >= 3:
+                logger.warning('UnicodeDecodeError when loading pickle, trying with encoding="latin1"')
+                # Rewind file and try again with encoding
+                f.seek(0)
+                return pickle.load(f, encoding='latin1')
+            else:
+                raise
         # TODO: add pickling debug

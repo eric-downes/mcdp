@@ -152,14 +152,38 @@ The current strategy involves:
    # Then test it independently
    ```
 
+## Current Progress (Updated)
+
+### Successfully Migrated Files (Recent Updates)
+
+| File | Status | Notes |
+|------|--------|-------|
+| `vendor/pycontracts` | ✅ Updated | Fixed compatibility with Python 3.8+ |
+| `mcdp_utils_misc/fileutils.py` | ✅ Updated | Fixed string/bytes handling for Python 3 |
+| `mcdp_utils_misc/natsort.py` | ✅ Updated | Improved natural sort implementation for Python 3 |
+| `mcdp_utils_misc/safe_pickling.py` | ✅ Updated | Added Python 3 pickle protocol and encoding handling |
+| `mcdp_utils_misc/safe_write.py` | ✅ Updated | Added encoding support for text modes in Python 3 |
+| `mcdp_utils_misc/my_yaml.py` | ✅ Updated | Updated to handle both old and new ruamel.yaml API versions |
+| `tests/test_utils_py3.py` | ✅ Created | Tests for Python 3 compatibility of utility modules |
+
+### PyContracts Fix
+
+The biggest blocker - incompatibility of PyContracts with Python 3.8+ - has been fixed. The following issues were addressed:
+
+1. The `inspect.ArgSpec` removal in Python 3.8+ was fixed by implementing a custom replacement
+2. NumPy deprecated types were updated to use explicit type specifications
+3. Collection ABC imports were updated to use `collections.abc` instead of deprecated `collections` module
+4. Escape sequences in regular expressions were fixed by using raw strings
+
+A fork has been created with these fixes and the PyContracts PR has been submitted.
+
 ## Next Steps
 
-1. Continue migrating `mcdp_utils_misc` modules one by one:
-   - `fileutils.py` - Likely needs updating for file modes ('rb' vs 'r')
-   - `natsort.py` - Needs updating for Python 3 sorting
-   - `safe_pickling.py` - Needs updating for Python 3 pickle protocol
+1. Update `mcdp.__init__.py` and other related modules to remove the fallbacks for PyContracts now that it's fixed
 
-2. Update import structure in `__init__.py` files to handle import failures gracefully
+2. Continue migrating remaining `mcdp_utils_misc` modules:
+   - Confirm all utility modules are fully Python 3 compatible
+   - Run more comprehensive tests of the updated modules
 
 3. Start migrating core language modules:
    - `mcdp_posets` package
@@ -167,7 +191,7 @@ The current strategy involves:
 
 4. Update the remaining modules with string/bytes handling
 
-5. Create more comprehensive tests for migrated functionality
+5. Create more comprehensive tests for all migrated functionality
 
 6. Eventually, enable STRICT_DEPENDENCIES to enforce proper dependency checking
 

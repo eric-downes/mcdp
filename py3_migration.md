@@ -22,6 +22,21 @@ This document outlines the step-by-step process for migrating the PyMCDP codebas
    - Updated formatting in `duration_hum.py`
    - Fixed imports in `debug_pickler.py` and `string_repr.py`
 
+4. **PyContracts Compatibility**
+   - Fixed PyContracts to work with Python 3.8+ by creating a patched fork
+   - Added handling for `inspect.ArgSpec` removal in Python 3.8+
+   - Updated collection ABC imports to use `collections.abc`
+   - Fixed NumPy deprecated types
+   - Created PR for upstream project
+
+5. **More Utility Functions**
+   - Updated `fileutils.py` for proper string/bytes handling
+   - Enhanced `natsort.py` with improved natural sorting for Python 3
+   - Updated `safe_pickling.py` with Python 3 pickle protocol handling
+   - Improved `safe_write.py` with encoding support for text modes
+   - Updated `my_yaml.py` to handle both old and new ruamel.yaml API 
+   - Added comprehensive Python 3 compatibility tests
+
 For detailed progress and implementation notes, see [py3_migrate_details.md](py3_migrate_details.md).
 
 ## Table of Contents
