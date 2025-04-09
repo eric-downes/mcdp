@@ -2,6 +2,28 @@
 
 This document outlines the step-by-step process for migrating the PyMCDP codebase from Python 2 to Python 3, with a focus on incremental testing and recovery strategies.
 
+## Migration Progress
+
+### Completed Tasks ✅
+
+1. **Core Infrastructure**
+   - Created compatibility module `py_compatibility.py`
+   - Set up core module import structure with fallbacks
+   - Added STRICT_DEPENDENCIES flag to control dependency enforcement
+
+2. **Core Module Migration**
+   - Migrated `mcdp.branch_info`, `mcdp.logs`, `mcdp.constants`
+   - Updated `mcdp.dependencies` with Python 3 compatibility
+   - Updated `mcdp.development` with fallbacks
+
+3. **Basic Utilities**
+   - Created Python 3 compatible version of `memoize_simple` 
+   - Updated string/bytes handling in `string_utils.py`
+   - Updated formatting in `duration_hum.py`
+   - Fixed imports in `debug_pickler.py` and `string_repr.py`
+
+For detailed progress and implementation notes, see [py3_migrate_details.md](py3_migrate_details.md).
+
 ## Table of Contents
 
 1. [Preparation](#1-preparation)
@@ -16,8 +38,8 @@ This document outlines the step-by-step process for migrating the PyMCDP codebas
 ### 1.1 Setup Branching Strategy
 
 ```bash
-# Create a new branch for the Python 3 migration
-git checkout -b python3_migration
+# Create a new branch for the Python 3 migration (DONE)
+# git checkout -b py3_update # DONE
 
 # Create savepoints for key stages (or use Git's stash functionality)
 # After each major component is converted:
