@@ -1,7 +1,11 @@
-from .logs import logger
-from .branch_info import *
-from .constants import *
-from .dependencies import *
-from .development import *
+# First, import the compatibility module to ensure it's available
+from .py_compatibility import *
 
-from .branch_info import __version__
+# Then import only the most critical modules for now
+from .branch_info import __version__, BranchInfo
+from .logs import logger
+from .constants import MCDPConstants
+from .dependencies import *
+
+# Import the rest as they are migrated
+# from .development import *

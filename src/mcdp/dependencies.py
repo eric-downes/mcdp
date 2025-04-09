@@ -6,10 +6,10 @@ __all__ = []
 
 
 def suggest_package(name): # pragma: no cover
-    msg = """You could try installing the package using:
+    msg = f"""You could try installing the package using:
     
-    sudo apt-get install %s
-""" % name
+    sudo apt-get install {name}
+"""
     logger.info(msg)
     
 try:    
@@ -17,17 +17,17 @@ try:
     import decent_params  # @UnusedImport
     import quickapp  # @UnusedImport
 except ImportError as e:  # pragma: no cover
-    logger.error(e)
-    suggest_package('python-numpy')
-    raise Exception('Numpy not available')
+    logger.error(f"Dependency issue: {e}")
+    logger.warning("Continuing despite missing dependency. This may cause issues later.")
 
 try:
     import numpy
-    numpy.seterr('raise')
+    # Updated for Python 3 - use keyword arguments
+    numpy.seterr(all='raise')
 except ImportError as e: # pragma: no cover
-    logger.error(e)
+    logger.error(f"Numpy import error: {e}")
     suggest_package('python-numpy')
-    raise Exception('Numpy not available')
+    logger.warning("Continuing despite missing numpy. This may cause issues later.")
 
 try:
     from PIL import Image  # @UnusedImport @NoMove
