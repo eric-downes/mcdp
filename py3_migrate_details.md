@@ -93,13 +93,25 @@ The current strategy involves:
 | `mcdp_utils_misc/debug_pickler.py` | ✅ Updated | Fixed StringIO and pickle imports |
 | `mcdp_utils_misc/string_utils.py` | ✅ Updated | Fixed bytes handling and formatting |
 | `mcdp_utils_misc/duration_hum.py` | ✅ Updated | Updated string formatting to f-strings |
+| `mcdp_utils_misc/fileutils.py` | ✅ Updated | Fixed string/bytes handling for Python 3 |
+| `mcdp_utils_misc/natsort.py` | ✅ Updated | Improved natural sort implementation for Python 3 |
+| `mcdp_utils_misc/safe_pickling.py` | ✅ Updated | Added Python 3 pickle protocol and encoding handling |
+| `mcdp_utils_misc/safe_write.py` | ✅ Updated | Added encoding support for text modes in Python 3 |
+| `mcdp_utils_misc/my_yaml.py` | ✅ Updated | Updated to handle both old and new ruamel.yaml API versions |
+| `mcdp_utils_misc/dir_from_package_nam.py` | ✅ Compatible | No changes needed |
+| `mcdp_utils_misc/good_identifiers.py` | ✅ Compatible | No changes needed |
+| `mcdp_utils_misc/locate_files_imp.py` | ✅ Updated | Fixed collections import in Python 3 and updated string formatting |
+| `mcdp_utils_misc/memos_selection.py` | ✅ Updated | Improved error handling and updated string formatting |
+| `mcdp_utils_misc/mimes.py` | ✅ Compatible | No changes needed |
+| `mcdp_utils_misc/mis.py` | ✅ Compatible | No changes needed |
+| `mcdp_utils_misc/timing.py` | ✅ Updated | Replaced deprecated time.clock() with time.process_time() in Python 3 |
 
 ### Files in Progress or Next to Migrate
 
 | File | Status | Notes |
 |------|--------|-------|
-| `mcdp_utils_misc/__init__.py` | ⚠️ Updated | Added compatibility imports, needs more testing |
-| Other `mcdp_utils_misc/*.py` files | 🔄 Pending | Need to review and update one by one |
+| `mcdp_utils_misc/__init__.py` | ✅ Updated | Added compatibility imports, all tests passing |
+| `mcdp_posets/*` | 🔄 Pending | Next module to migrate |
 | `mcdp_lang/utils.py` | ⚠️ Started | Fixed inspect.getargspec usage |
 | `mcdp/__init__.py` | ⚠️ Updated | Temporarily modified to allow partial imports |
 
