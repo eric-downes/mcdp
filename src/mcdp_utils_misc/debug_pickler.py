@@ -35,7 +35,7 @@ def find_pickling_error(obj, protocol=pickle.HIGHEST_PROTOCOL):
         pass
     else:
         msg = ('Strange! I could not reproduce the pickling error '
-                f"for the object of class {describe_type}"(obj))
+                f"for the object of class {describe_type(obj)}")
         logger.info(msg)
 
     pickler = MyPickler(sio, protocol)
@@ -57,7 +57,7 @@ class MyPickler(Pickler):
         self.stack = []
 
     def save(self, obj):
-        desc = f"object of type {describe_type(obj}")
+        desc = f"object of type {describe_type(obj)}"
         # , describe_value(obj, 100))
         #  self.stack.append(describe_value(obj, 120))
         self.stack.append(desc)
@@ -71,7 +71,7 @@ class MyPickler(Pickler):
         return s
 
     def save_pair(self, k, v):
-        self.stack.append(f"key %r = object of type {k}"))
+        self.stack.append(f"key {k!r} = object of type {type(k)}")
         self.save(k)
         self.save(v)
         self.stack.pop()
@@ -84,7 +84,7 @@ class MyPickler(Pickler):
 
         if not self.bin:
             for k, v in items:
-                self.stack.append(f"entry {str}"(k))
+                self.stack.append(f"entry {str(k)}")
                 self.save_pair(k, v)
                 self.stack.pop()
                 write(SETITEM)
@@ -113,13 +113,13 @@ class MyPickler(Pickler):
             if n > 1:
                 write(MARK)
                 for k, v in tmp:
-                    self.stack.append(f"entry {str}"(k))
+                    self.stack.append(f"entry {str(k)}")
                     self.save_pair(k, v)
                     self.stack.pop()
                 write(SETITEMS)
             elif n:
                 k, v = tmp[0]
-                self.stack.append(f"entry {str}"(k))
+                self.stack.append(f"entry {str(k)}")
                 self.save_pair(k, v)
                 self.stack.pop()
                 write(SETITEM)

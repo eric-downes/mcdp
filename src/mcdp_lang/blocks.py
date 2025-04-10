@@ -59,14 +59,14 @@ def check_missing_connections(context):
                     ref = n
                 else:
                     ref = f"{n}.{fn}"
-                fix += f"\n' + "{ref} >= {fn2}"
+                fix += f"\n{ref} >= {fn2}"
                 msg += indent(fix, '    ')
                 s += '\n' + indent(msg, 'help: ')
 
     if unconnected_res:
         s += "\nThere are some unconnected resources:"
         for n, rn in xsorted(unconnected_res):
-            s += f"\n- resource {rn} of dp %r"
+            s += f"\n- resource {rn!r} of dp {n!r}"
             if False:
                 msg = 'One way to fix this is to add an explicit resource:\n'
                 rn2 = 'r'
@@ -76,7 +76,7 @@ def check_missing_connections(context):
                 else:
                     ref = f"{n}.{rn}"
                 # todo: omit '.' if n is
-                fix += f"\n' + "{rn2} >= {ref}"
+                fix += f"\n{rn2} >= {ref}"
                 msg += indent(fix, '    ')
                 s += '\n' + indent(msg, 'help: ')
 

@@ -49,7 +49,7 @@ class SpaceProduct(Space):
         if not isinstance(x, tuple):
             raise_desc(NotBelongs, 'Not a tuple', x=x, self=self)
         if not len(x) == len(self.subs):
-            raise_desc(NotBelongs, f"Length does not match: len(x) = {len(x} != %s", len(self.subs)),
+            raise_desc(NotBelongs, f"Length does not match: len(x) = {len(x)} != {len(self.subs)}",
                         x=x, self=self)
 
         problems = []
@@ -78,7 +78,7 @@ class SpaceProduct(Space):
             if not label or label[0] == '_':
                 s = sub.format(xe)
             else:
-                s = f"{label}:{sub.format(xe}")
+                s = f"{label}:{sub.format(xe)}"
             ss.append(s)
 
     # 'MATHEMATICAL LEFT ANGLE BRACKET' (U+27E8) ⟨
@@ -102,10 +102,10 @@ class SpaceProduct(Space):
                 res += '{%s}' % "/".join(a)
             args.append(res)
 
-        return f"{name}(%d: {len(self.subs})", ",".join(args))
+        return f"{name}({len(self.subs)}: {','.join(args)})"
 
     def repr_long(self):
-        s = f"{type(self}[%s]".__name__, len(self.subs))
+        s = f"{type(self).__name__}[{len(self.subs)}]"
         for i, S in enumerate(self.subs):
             prefix0 = " %d. " % i
             prefix1 = "    "
@@ -144,7 +144,7 @@ class SpaceProduct(Space):
             # return "1"
 
         if len(self.subs) == 1:
-            return f"({f}×)"(list(self.subs)[0])
+            return f"({f(list(self.subs)[0])}×)"
 
         return "×".join(map(f, self.subs))
 

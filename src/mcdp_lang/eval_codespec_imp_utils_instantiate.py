@@ -24,9 +24,9 @@ def instantiate(function_name, parameters):
         # XXX TypeError is too broad, we should bind the params explicitly
         return function(**parameters)
     except TypeError as e:
-        params = f", '.join(['{k}=%r" for (k, v) in parameters.items()])
-        msg = (f"instantiate(): Could not call function %r\n with params {function_name}:")
-        msg += f"\n' + indent('{e}\n{traceback.format_exc(e}"), '> ')
+        params = ", ".join([f"{k}={v!r}" for (k, v) in parameters.items()])
+        msg = f"instantiate(): Could not call function {function_name!r}\n with params {params}"
+        msg += "\n" + indent(f"{e}\n{traceback.format_exc()}", '> ')
         raise SemanticMistake(msg)
 
 class ImportFailure(ValueError):
@@ -54,7 +54,7 @@ def import_name(name):
                 except ImportError as e:
                     msg = ('Cannot load %r (tried also with %r):\n' %
                            (name, module_name))
-                    msg += f"\n' + indent('{e}\n{traceback.format_exc(e}"), '> ')
+                    msg += "\n" + indent(f"{e}\n{traceback.format_exc()}", '> ')
                     raise ImportFailure(msg)
 
                 if not field in module.__dict__:
@@ -71,7 +71,7 @@ def import_name(name):
                 except ImportError as e:
                     msg = ('Cannot load %r (tried also with %r):\n' %
                            (name, module_name))
-                    msg += f"\n' + indent('{e}\n{traceback.format_exc(e}"), '> ')
+                    msg += "\n" + indent(f"{e}\n{traceback.format_exc()}", '> ')
                     raise ImportFailure(msg)
 
                 if not field in module.__dict__:

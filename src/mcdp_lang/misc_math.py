@@ -187,7 +187,7 @@ def plus_constants2_rcompunits(a, b):
     try:
         res = sum_units(Fs, values, R)
     except IncompatibleUnits:
-        msg = f"The units "{a.unit.string}" and "{b.unit.string}" are incompatible."
+        msg = f'The units "{a.unit.string}" and "{b.unit.string}" are incompatible.'
         raise DPSemanticError(msg)
     return ValueWithUnits(value=res, unit=R)
 

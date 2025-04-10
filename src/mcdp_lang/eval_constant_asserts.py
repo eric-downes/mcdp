@@ -109,7 +109,7 @@ def get_sequence(vu):
     elif isinstance(vu.unit, FiniteCollectionsInclusion):
         return vu.value.elements
     else:
-        msg = f"Could not get sequence from element {type}."(vu.unit)
+        msg = f"Could not get sequence from element {type(vu.unit)}."
         raise_desc(DPSemanticError, msg, vu=vu)
 
 

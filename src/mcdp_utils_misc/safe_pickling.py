@@ -27,7 +27,7 @@ def safe_pickle_dump(value, filename, protocol=pickle.HIGHEST_PROTOCOL,
         except KeyboardInterrupt:
             raise
         except Exception:
-            msg = f"Cannot pickle object of class {describe_type}"(value)
+            msg = f"Cannot pickle object of class {describe_type(value)}"
             logger.error(msg)
             msg = find_pickling_error(value, protocol)
             logger.error(msg)

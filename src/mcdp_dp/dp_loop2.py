@@ -148,9 +148,9 @@ class DPLoop2(PrimitiveDP):
 #         try:
 #             F2.check_leq(r, f2)
 #         except NotLeq as e:
-#             msg = f"Loop constraint not satisfied {F2.format(r} <= %s not satisfied.", F2.format(f2))
-#             msg += f"\n f1 = %10s -->| ->[ {F1.format(f1} ] --> %s ", self.dp1, F2.format(r))
-#             msg += "\n f2 = %10s -->|" % F2.format(f2)
+#             msg = f"Loop constraint not satisfied {F2.format(r)} <= {F2.format(f2)} not satisfied."
+#             msg += f"\n f1 = {F1.format(f1):10s} -->| ->[ {self.dp1} ] --> {F2.format(r)}"
+#             msg += f"\n f2 = {F2.format(f2):10s} -->|"
 #             raise_wrapped(NotFeasible, e, msg, compact=True)
 # 
 #         self.R.belongs(r)
@@ -170,8 +170,7 @@ class DPLoop2(PrimitiveDP):
             if R0.leq(used, r):
                 msg = f"loop: asking to show it is unfeasible ({f1}, {m}, {r})"
                 msg += '\nBut inner is feasible and loop constraint *is* satisfied.'
-                msg += f"\n f1 = %10s -->| ->[ m0= {F1.format(f1} ] --> %s <= %s", self.M0.format(m0),
-                                                                        R0.format(used), R0.format(r))
+                msg += f"\n f1 = {F1.format(f1):10s} -->| ->[ m0= {self.M0.format(m0)} ] --> {R0.format(used)} <= {R0.format(r)}"
                 msg += "\n f2 = %10s -->|" % F2.format(f2)
                 raise_wrapped(Feasible, e, msg, compact=True, dp1=self.dp1.repr_long())
 
@@ -184,14 +183,14 @@ class DPLoop2(PrimitiveDP):
             self.dp1.check_feasible(f, m0, r)
         except NotFeasible as e:
             msg = f"loop: Asking loop if feasible (f1={f1}, m={m}, r={r})"
-            msg += f"\nInternal was not feasible when asked for (f={f}, m0={m0}, r=%r)"
+            msg += f"\nInternal was not feasible when asked for (f={f}, m0={m0}, r={r})"
             raise_wrapped(NotFeasible, e, msg, dp1=self.dp1.repr_long(), compact=True)
  
     def __repr__(self):
         return 'DPLoop2(%r)' % self.dp1
 
     def repr_long(self):
-        s = f"DPLoop2:   {self.get_fun_space(} ⇸ %s\n", self.get_res_space())
+        s = f"DPLoop2:   {self.get_fun_space()} ⇸ {self.get_res_space()}\n"
         s += indent(self.dp1.repr_long(), 'L ')
         return s
 
@@ -248,7 +247,7 @@ class DPLoop2(PrimitiveDP):
                                             r_converged=upperset_project(converged, 0))
                 S.append(iteration)
                 
-                t.log(f"R = {UR}".format(si_next))
+                t.log(f"R = {UR.format(si_next)}")
 
                 if do_extra_checks():
                     try:
@@ -301,7 +300,7 @@ class DPLoop2(PrimitiveDP):
                                             r_converged=lowerset_project(converged, 0))
                 S.append(iteration)
                 
-                t.log(f"si_next = {LF}".format(si_next))
+                t.log(f"si_next = {LF.format(si_next)}")
 
                 if do_extra_checks():
                     try:

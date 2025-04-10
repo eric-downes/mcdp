@@ -77,6 +77,8 @@ def eval_constant(op, context):
         CDP.SpecialConstant: eval_constant_SpecialConstant,
     }
     
+    # In Python 3, items() returns a view object which is memory efficient
+    # Only use list() if we need to modify the dictionary during iteration
     for klass, hook in cases.items():
         if isinstance(op, klass):
             return hook(op, context)
@@ -94,7 +96,7 @@ def eval_constant_SpecialConstant(r, context):  # @UnusedVariable
     constants['π'] = constants['pi']
 
     if not r.constant_name in constants:
-        msg = f"Could not find constant "{r.constant_name}"."
+        msg = f'Could not find constant "{r.constant_name}".'
         raise_desc(DPInternalError, msg)
 
     return constants[r.constant_name]
@@ -306,6 +308,7 @@ def eval_constant_space_custom_value(op, context):
             mcdp_dev_warning('this does not seem to work...')
         except NotBelongs:
             msg = 'The value "%s" is not an element of this poset.' % custom_string
+            # join() consumes the iterator from map() directly, no list() needed
             msg += '\n\nThese are the valid values: ' + ", ".join(map(str, space.elements)) + '.'
             raise_desc(DPSemanticError, msg)
 

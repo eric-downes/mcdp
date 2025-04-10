@@ -74,8 +74,9 @@ def eval_ndp(r, context):
         CDP.Eversion: eval_eversion,
     }
     
-    # Using list() on items() for Python 3 compatibility
-    for klass, hook in list(cases.items()):
+    # In Python 3, items() returns a view object which is memory efficient
+    # Only use list() if we need to modify the dictionary during iteration
+    for klass, hook in cases.items():
         if isinstance(r, klass):
             return hook(r, context)
 
@@ -208,8 +209,8 @@ def eval_ndp_specialize(r, context):
             msg = 'Repeated parameters in specialize.'
             raise_desc(DPSemanticError, msg, keys=keys)
         values = [eval_ndp(_, context) for _ in values]
-        # Using list() on zip result for Python 3 compatibility
-        d = dict(list(zip(keys, values)))
+        # In Python 3, dict() consumes the iterator from zip() directly
+        d = dict(zip(keys, values))
         params = d
     else:
         params = {}
@@ -1163,8 +1164,9 @@ def eval_statement(r, context):
                   
         }
         
-        # Using list() on items() for Python 3 compatibility
-        for klass, hook in list(cases.items()):
+        # In Python 3, items() returns a view object which is memory efficient
+        # Only use list() if we need to modify the dictionary during iteration
+        for klass, hook in cases.items():
             if isinstance(r, klass):
                 return hook(r, context)
 

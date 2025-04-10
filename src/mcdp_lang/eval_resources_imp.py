@@ -97,8 +97,9 @@ def eval_rvalue(rvalue, context):
         CDP.SumResources: eval_rvalue_SumResources,
     }
 
-    # Using list() on items() for Python 3 compatibility
-    for klass, hook in list(cases.items()):
+    # In Python 3, items() returns a view object which is memory efficient
+    # Only use list() if we need to modify the dictionary during iteration
+    for klass, hook in cases.items():
         if isinstance(rvalue, klass):
             return hook(rvalue, context)
 
@@ -108,7 +109,8 @@ def eval_rvalue(rvalue, context):
         raise_desc(DoesNotEvalToResource, msg, rvalue=rvalue)
  
 def iterate_normal_ndps(context):
-    # Using list() on items() for Python 3 compatibility
+    # Need list() here because we're creating a generator that might be used 
+    # while the names dictionary is being modified
     for n, ndp in list(context.names.items()):
         normal = not context.is_new_function(n) and not context.is_new_resource(n)
         if normal:

@@ -489,13 +489,13 @@ def get_best_match(opname, rtypes, are_they_constant, generic_ops):
         return op, symbols
     
         
-    msg = (f"Could not find a match with any of the {len(problems} version(s) of %r.", opname))
+    msg = f"Could not find a match with any of the {len(problems)} version(s) of {opname!r}."
     ops = []    
     for R, is_constant in zip(rtypes, are_they_constant):
         o = f"constant {R}" if is_constant else f"{R}"
         ops.append(o)
-    proto = f"{opname}({"})")
-    msg += f"\n' + 'I was looking for a prototype like:\n\n    {proto}"
+    proto = f"{opname}(...)"
+    msg += f"\nI was looking for a prototype like:\n\n    {proto}"
     msg += '\n\nHowever, I got these problems:\n'
     for id_op, e in problems:
         prefix = '   ' + id_op + ':'
@@ -509,7 +509,7 @@ def match_op(op, rtypes, are_they_constant):
     """ Returns symbols or raises NotMatching """
     requires = op.get_arguments_type()
     if len(requires) != len(rtypes):
-        msg = f"Wrong number of args (expected {len(requires}, found %d).", len(rtypes))
+        msg = f"Wrong number of args (expected {len(requires)}, found {len(rtypes)})."
         raise_desc(NotMatching, msg)
         
     symbols = {}

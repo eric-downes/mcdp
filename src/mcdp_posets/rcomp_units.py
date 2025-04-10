@@ -249,14 +249,14 @@ def parse_pint(s0):
     try:
         return ureg.parse_expression(s)
     except UndefinedUnitError as e:
-        msg = f"Cannot parse units %r: {s0}.")
+        msg = f"Cannot parse units {s0!r}:"
         raise_desc(DPSemanticError, msg)
     except SyntaxError as e:
         msg = 'Cannot parse units %r.' % s0
         raise_wrapped(DPSemanticError, e, msg, compact=True, exc=sys.exc_info())
         # ? for some reason compact does not have effect here
     except Exception as e:
-        msg = f"Cannot parse units %r ({s0}).")
+        msg = f"Cannot parse units {s0!r}"
         raise_wrapped(DPSemanticError, e, msg, compact=True, exc=sys.exc_info())
 
 

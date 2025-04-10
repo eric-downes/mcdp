@@ -29,7 +29,7 @@ class PosetProductWithLabels(PosetProduct):
 
         ss = []
         for label, sub, xe in zip(self.labels, self.subs, x):
-            s = f"{label}:{sub.format(xe}")
+            s = f"{label}:{sub.format(xe)}"
             ss.append(s)
 
         # 'MATHEMATICAL LEFT ANGLE BRACKET' (U+27E8) ⟨

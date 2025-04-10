@@ -31,7 +31,7 @@ def create_operation(context, dp, resources, name_prefix=None, op_prefix=None, r
     
     """
     if name_prefix is None:
-        name_prefix = f"_{type}"(dp).__name__
+        name_prefix = f"_{type(dp).__name__}"
     # new name for the ndp
     name = context.new_name(name_prefix)
     if op_prefix is None:
@@ -86,7 +86,7 @@ def create_operation(context, dp, resources, name_prefix=None, op_prefix=None, r
 def create_operation_lf(context, dp, functions, name_prefix=None, 
                         op_prefix='_op', res_prefix='_res', allow_conversion=True):
     if name_prefix is None:
-        name_prefix = f"_{type}"(dp).__name__ 
+        name_prefix = f"_{type(dp).__name__}" 
     name = context.new_name(name_prefix)
     name_result = context.new_res_name(res_prefix)
     

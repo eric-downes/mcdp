@@ -128,7 +128,7 @@ class PrimitiveDP(WithInternalLog):
 
     def _assert_inited(self):
         if not '_inited' in self.__dict__:
-            msg = f"Class {type(self} not inited.")
+            msg = f"Class {type(self)} not inited."
             raise Exception(msg)
 
     @contract(returns=Space)
@@ -251,7 +251,7 @@ class PrimitiveDP(WithInternalLog):
 #         return NormalFormApprox(S=S, gamma=gamma, delta=delta)
 
     def __repr__(self):
-        return f"{type(self}(%s→%s)".__name__, self.F, self.R)
+        return f"{type(self).__name__}({self.F}→{self.R})"
 
     def repr_long(self):
         """ A long, multiline representation """
