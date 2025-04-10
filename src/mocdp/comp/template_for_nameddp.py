@@ -38,7 +38,8 @@ class TemplateForNamedDP(object):
             realpath = getattr(self, MCDPConstants.ATTR_LOAD_REALPATH)
             if realpath is not None and e.where.filename is None:
                 e = e.with_filename(realpath)
-                raise type(e), e.args, sys.exc_info()[2]
+                tb = sys.exc_info()[2]
+                raise e.with_traceback(tb)
             else:
                 raise
         

@@ -53,16 +53,42 @@ We've made the following updates:
 8. Replaced time.clock() with time.process_time()
 9. Fixed invalid escape sequences in docstrings
 
-## Testing Status
-We attempted to run tests, but they failed due to Python 3 compatibility issues in dependent modules:
-- Error in mcdp_library/library.py line 294: `raise e, None, traceback` uses Python 2 syntax
-- We need to migrate dependent modules before we can fully test this one
+## Dependent Modules Migration Progress
+
+We've started migrating dependent modules, focusing on exception handling, but encountered substantial Python 3 compatibility issues:
+
+### Fixed:
+1. Exception re-raising in mcdp_library/library.py: `raise e, None, traceback` → `raise e.with_traceback(tb)`
+2. Exception re-raising in mcdp_lang/parse_interface.py 
+3. Exception re-raising in mcdp_lang/parse_actions.py
+4. Exception re-raising in mocdp/comp/template_for_nameddp.py
+5. Added fallback definition for assert_equal when nose.tools is unavailable
+6. Fixed collections.abc module imports (MutableMapping, Sequence) in pyparsing_bundled.py
+
+### Further Issues:
+1. String vs bytes handling in pyparsing_bundled.py (TypeError: startswith first arg must be bytes...)
+2. Invalid escape sequences in regular expressions
+3. Deprecated sre_constants module
+4. Several more Python 2 style exception re-raising patterns
+
+### Assessment:
+The pyparsing_bundled.py file is particularly problematic and would require extensive changes or replacement with a Python 3 compatible version of pyparsing. The module's string/bytes handling is particularly problematic.
 
 ## Next Steps
-1. Migrate mcdp_library module for Python 3 compatibility
-2. Migrate mcdp_tests module for Python 3 compatibility
-3. Re-run tests after dependent modules are migrated
-4. Fix any remaining issues specific to mcdp_posets that arise during testing
+1. Replace pyparsing_bundled.py with a Python 3 compatible version of pyparsing 
+2. Continue migrating core modules:
+   - mcdp_library module
+   - mcdp_lang module
+   - mocdp module
+   - mcdp_tests module
+3. Apply the same patterns we used for mcdp_posets:
+   - Fix exception re-raising patterns
+   - Update metaclass syntax
+   - Add __hash__ methods where needed
+   - Add collections.abc imports
+   - Fix string formatting to use f-strings
+4. Re-run tests after dependent modules are migrated
+5. Fix any remaining issues specific to mcdp_posets that arise during testing
 
 ## Common Migration Patterns
 1. Update metaclass syntax from `__metaclass__ = X` to `class Y(object, metaclass=X)`

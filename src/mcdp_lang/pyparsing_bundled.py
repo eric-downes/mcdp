@@ -72,6 +72,14 @@ import re
 import sre_constants
 import collections
 import pprint
+
+# Python 3.12+ compatibility - Abstract Base Classes moved to collections.abc
+try:
+    from collections.abc import Sequence, MutableMapping
+except ImportError:
+    # For Python 3.11 and below
+    Sequence = collections.Sequence
+    MutableMapping = collections.MutableMapping
 import traceback
 from datetime import datetime
 
@@ -723,8 +731,9 @@ class ParseResults(object):
 
     def __dir__(self):
         return (dir(type(self)) + list(self.keys()))
-
-collections.MutableMapping.register(ParseResults)
+        
+# Register ParseResults as a MutableMapping
+MutableMapping.register(ParseResults)
 
 def col (loc,strg):
     """Returns current column within a string, counting newlines as line separators.
@@ -2438,7 +2447,7 @@ class ParseExpression(ParserElement):
 
         if isinstance( exprs, basestring ):
             self.exprs = [ ParserElement._literalStringClass( exprs ) ]
-        elif isinstance( exprs, collections.Sequence ):
+        elif isinstance( exprs, Sequence ):
             # if sequence of strings provided, wrap with Literal
             if all(isinstance(expr, basestring) for expr in exprs):
                 exprs = map(ParserElement._literalStringClass, exprs)
@@ -3473,7 +3482,7 @@ def oneOf( strs, caseless=False, useRegex=True ):
     symbols = []
     if isinstance(strs,basestring):
         symbols = strs.split()
-    elif isinstance(strs, collections.Sequence):
+    elif isinstance(strs, Sequence):
         symbols = list(strs[:])
     elif isinstance(strs, _generatorType):
         symbols = list(strs)

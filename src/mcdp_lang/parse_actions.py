@@ -4,7 +4,13 @@ import sys
 import traceback
 
 from decorator import decorator
-from nose.tools import assert_equal
+try:
+    from nose.tools import assert_equal
+except ImportError:
+    # Fallback for Python 3.12 (imp module removed)
+    def assert_equal(a, b, msg=None):
+        """Assert that two objects are equal."""
+        assert a == b, msg or f"{a!r} != {b!r}"
 
 from contracts import contract
 from contracts.utils import raise_desc, raise_wrapped, check_isinstance, indent
@@ -104,7 +110,8 @@ def raise_with_info(e, where, tb):
     stack = nice_stack(tb)
     
     args = (error, use_where, stack)
-    raise type(e), args, tb
+    exception = type(e)(*args)
+    raise exception.with_traceback(tb)
 
 def wheredecorator(b):
     def bb(tokens, loc, s):
@@ -369,7 +376,8 @@ def parse_wrap(expr, string):
         check_isinstance(s0, bytes)
         s = s0
         e2 = DPSyntaxError(s, where=where2)
-        raise DPSyntaxError, e2.args, sys.exc_info()[2]
+        tb = sys.exc_info()[2]
+        raise e2.with_traceback(tb)
          
     except DPSemanticError as e:
         msg = 'This should not throw a DPSemanticError'
