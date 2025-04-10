@@ -74,7 +74,8 @@ def eval_ndp(r, context):
         CDP.Eversion: eval_eversion,
     }
     
-    for klass, hook in cases.items():
+    # Using list() on items() for Python 3 compatibility
+    for klass, hook in list(cases.items()):
         if isinstance(r, klass):
             return hook(r, context)
 
@@ -207,7 +208,8 @@ def eval_ndp_specialize(r, context):
             msg = 'Repeated parameters in specialize.'
             raise_desc(DPSemanticError, msg, keys=keys)
         values = [eval_ndp(_, context) for _ in values]
-        d = dict(zip(keys, values))
+        # Using list() on zip result for Python 3 compatibility
+        d = dict(list(zip(keys, values)))
         params = d
     else:
         params = {}
@@ -243,7 +245,7 @@ def eval_ndp_load(r, context):
             context2 = context.child()
             res = library.load_ndp(name, context2)
     
-            msg = 'While loading MCDP %r from library %r:' % (name, libname)
+            msg = f'While loading MCDP {name!r} from library {libname!r}:'
             warnings_copy_from_child_make_nested2(context, context2, r.where, msg)
             return res
     
@@ -252,7 +254,7 @@ def eval_ndp_load(r, context):
     
             context2 = context.child()
             res = context2.load_ndp(name)
-            msg = 'While loading MCDP %r:' % (name)
+            msg = f'While loading MCDP {name!r}:'
             warnings_copy_from_child_make_nested2(context, context2, r.where, msg)
             return res
     except DPSyntaxError as e:
@@ -287,7 +289,7 @@ def eval_ndp_instancefromlibrary(r, context):
         
         context2 = context.child()
         res = library.load_ndp(name, context2)
-        msg = 'While loading %r from library %r:' % (name, libname)
+        msg = f'While loading {name!r} from library {libname!r}:'
         warnings_copy_from_child_make_nested2(context, context2, r.where, msg)
         return res
 
@@ -434,7 +436,7 @@ def eval_ndp_catalogue(r, context):
         name = items[0].value
         expected = 1 + len(fun) + len(res)
         if len(items) != expected:
-            msg = f"Row with %d elements does not match expected of elements ({len(items} fun, %s res)", len(fun), len(res))
+            msg = f"Row with {expected} elements does not match expected of elements ({len(fun)} fun, {len(res)} res)"
             # msg += f" items: {str}"(items)
             raise DPSemanticError(msg, where=items[-1].where)
         fvalues0 = items[1:1 + len(fun)]
@@ -759,8 +761,8 @@ def add_constraint(context, resource, function):
                 context.add_connection(c)
             except NotLeq as e:
                 msg = 'Constraint between incompatible spaces.'
-                msg += f"\n  {R1} can be embedded in {F2}: {tu.leq(R1, F2} ")
-                msg += f"\n  {F2} can be embedded in {R1}: {tu.leq(F2, R1} ")
+                msg += f"\n  {R1} can be embedded in {F2}: {tu.leq(R1, F2)}"
+                msg += f"\n  {F2} can be embedded in {R1}: {tu.leq(F2, R1)}"
                 raise_wrapped(DPSemanticError, e, msg, R1=R1, F2=F2, compact=True)
     except NotImplementedError as e: # pragma: no cover
         msg = 'Problem while creating embedding.'
@@ -1074,6 +1076,8 @@ def eval_statement(r, context):
         except MCDPExceptionWithWhere as e:
             _, _, tb = sys.exc_info()
             where = r.prep.where # indicate preposition "<="
+            from mcdp.py_compatibility import raise_with_traceback
+            # Use compatibility function for raising with traceback
             raise_with_info(e, where, tb)
             
     elif isinstance(r, CDP.VarStatement):
@@ -1159,7 +1163,8 @@ def eval_statement(r, context):
                   
         }
         
-        for klass, hook in cases.items():
+        # Using list() on items() for Python 3 compatibility
+        for klass, hook in list(cases.items()):
             if isinstance(r, klass):
                 return hook(r, context)
 

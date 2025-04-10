@@ -91,27 +91,25 @@ def nice_stack(tb):
 def raise_with_info(e, where, tb):
     check_isinstance(e, MCDPExceptionWithWhere)
     existing = getattr(e, 'where', None)
-#     if existing is not None: 
-#         raise
-#     use_where = existing if existing is not None else where
+    
     if existing is not None and existing.string == where.string:
         use_where = existing
         error = e.error 
     else:
-        
         if existing is not None:
             use_where = where
             error = e.error + '\n' + format_where(existing)
-#             error = format_where(where) + '\n'+ format_where(existing)  + '\n' +  e.error    
         else:
             use_where = where
             error = e.error
-#         logger.debug('raise_with_info: seen %r ' % existing)
+            
     stack = nice_stack(tb)
     
     args = (error, use_where, stack)
     exception = type(e)(*args)
-    raise exception.with_traceback(tb)
+    # Use the compatibility function
+    from mcdp.py_compatibility import raise_with_traceback
+    raise_with_traceback(exception, tb)
 
 def wheredecorator(b):
     def bb(tokens, loc, s):
@@ -121,8 +119,8 @@ def wheredecorator(b):
                 res = b(tokens)
             except TypeError as e:
                 ttokens = list(tokens)
-                s = f"\n".join("- {str} "(x) for x in ttokens)
-                msg = f"Cannot invoke %r\nwith {len(ttokens} tokens:\n{b}.", s)
+                s = "\n".join(f"- {str(x)}" for x in ttokens)
+                msg = f"Cannot invoke {b!r}\nwith {len(ttokens)} tokens:\n{s}"
                 raise_wrapped(TypeError, e, msg)
         except DPSyntaxError as e:
             if e.where is None:
@@ -322,18 +320,11 @@ def translate_where(where0, string):
 
 def parse_wrap(expr, string):
     from .refinement import namedtuple_visitor_ext
-    from mcdp.py_compatibility import PY2, string_types
+    from mcdp.py_compatibility import string_types, ensure_str
     
-    if PY2:
-        # Python 2 compatibility
-        if isinstance(string, unicode):
-            msg = 'The string is unicode. It should be a str with utf-8 encoding.'
-            msg += '\n' + string.encode('utf-8').__repr__()
-            raise ValueError(msg)
-        check_isinstance(string, bytes)
-    else:
-        # Python 3
-        check_isinstance(string, string_types)
+    # Handle string types regardless of Python version
+    string = ensure_str(string)
+    check_isinstance(string, string_types)
 
     # Nice trick: the remove_comments doesn't change the number of lines
     # it only truncates them...
@@ -378,23 +369,24 @@ def parse_wrap(expr, string):
         where1 = Where(string0, e.loc)
         where2 = translate_where(where1, string)
         s0 = e.__str__()
-        check_isinstance(s0, bytes)
-        s = s0
+        # Ensure we have a proper string
+        s = ensure_str(s0)
         e2 = DPSyntaxError(s, where=where2)
         tb = sys.exc_info()[2]
-        raise e2.with_traceback(tb)
+        from mcdp.py_compatibility import raise_with_traceback
+        raise_with_traceback(e2, tb)
          
     except DPSemanticError as e:
         msg = 'This should not throw a DPSemanticError'
         raise_wrapped(DPInternalError, e, msg, exc=sys.exc_info()) 
     except RuntimeError as e:
-        msg = f"RuntimeError {type(e} while parsing string.".__name__)
+        msg = f"RuntimeError {type(e).__name__} while parsing string."
         msg += '\n' + indent(string, 'string: ')
         compact = 'maximum recursion depth' in str(e)
 #         compact = False # XXX
         raise_wrapped(DPInternalError, e, msg, compact=compact)
     except BaseException as e:
-        msg = f"Unexpected exception {type(e} while parsing string.".__name__)
+        msg = f"Unexpected exception {type(e).__name__} while parsing string."
         msg += '\n' + indent(string, 'string: ')
         raise_wrapped(DPInternalError, e, msg)
 
