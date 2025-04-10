@@ -40,7 +40,7 @@ def safe_write(filename, mode='wb', compresslevel=5, encoding=None):
     if sys.version_info[0] >= 3:
         tmp_filename = f'{filename}.tmp.{os.getpid()}.{n}'
     else:
-        tmp_filename = '%s.tmp.%s.%s' % (filename, os.getpid(), n)
+        tmp_filename = f"{filename}.tmp.{os.getpid(}.%s", n)
         
     try:
         if is_gzip_filename(filename):

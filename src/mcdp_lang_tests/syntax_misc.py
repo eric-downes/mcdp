@@ -302,7 +302,7 @@ def check_lang53():
 })""")
 
 def add_def_poset(l, name, data):
-    fn = '%s.mcdp_poset' % name
+    fn = f"{name}.mcdp_poset"
     l.file_to_contents[fn] = dict(realpath='#', data=data)
 
 @comptest
@@ -1835,7 +1835,7 @@ def imlements2():
 def constant_inverse_constant():
     s = """
     mcdp {
-        constant x = 1 / 2 m
+        constant x = 1 // 2 m
     }
     """
     parse_ndp(s)
@@ -1844,8 +1844,8 @@ def constant_inverse_constant():
 def constant_inverse2():
     s = """
     mcdp {
-        provides precision [1/mm]
-        provided precision <= 1 / 2 m
+        provides precision [1//mm]
+        provided precision <= 1 // 2 m
     }
     """
     parse_ndp(s)
@@ -1854,8 +1854,8 @@ def constant_inverse2():
 def constant_inverse3():
     s = """
     mcdp {
-        provides precision [1/mm]
-        provided precision <= 1 / 2 m
+        provides precision [1//mm]
+        provided precision <= 1 // 2 m
     }
     """
     parse_ndp(s)
@@ -1863,37 +1863,37 @@ def constant_inverse3():
 
 @comptest
 def constant_fvalue():
-    s = """ 1 / 2 m """
+    s = """ 1 // 2 m """
     print(parse_wrap(Syntax.constant_value_divided, s)[0])
     
     print(parse_wrap(Syntax.fvalue, s)[0])
 
 @comptest_fails
 def constant_fail():
-    s = """ 1 / 2 m """
+    s = """ 1 // 2 m """
     print(parse_wrap(Syntax.constant_value, s)[0])
     
 @comptest_fails
 def constant_fail2():
-    s = """ 1 / 2 m """
+    s = """ 1 // 2 m """
     print(parse_wrap(Syntax.constant_value_op, s)[0])
     
 @comptest
 def constant_rvalue():
-    s = """ 1 / 2 m """
+    s = """ 1 // 2 m """
     val = parse_wrap(Syntax.rvalue, s)[0]
     print(val)
     
     
 @comptest 
 def constant_inverse_ok():
-    s = """ 1 / 2 m """
+    s = """ 1 // 2 m """
     val = parse_constant(s)
     print(val)
     
 @comptest_fails
 def constant_inverse():
-    s = """ 1 / 2 """
+    s = """ 1 // 2 """
     val = parse_constant(s)
     print(val)
     

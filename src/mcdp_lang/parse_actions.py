@@ -50,7 +50,7 @@ def decorate_add_where(f, *args, **kwargs):
         _, _, tb = sys.exc_info() 
         raise_with_info(e, where, tb)
     except Exception as e:
-        msg = 'Unexpected exception while executing %s.' % f.__name__
+        msg = f"Unexpected exception while executing {f}.".__name__
         if args and isnamedtupleinstance(args[0]):
             r = recursive_print(args[0])
         else:
@@ -121,8 +121,8 @@ def wheredecorator(b):
                 res = b(tokens)
             except TypeError as e:
                 ttokens = list(tokens)
-                s = "\n".join("- %s " % str(x) for x in ttokens)
-                msg = 'Cannot invoke %r\nwith %d tokens:\n%s.' % (b, len(ttokens), s)
+                s = f"\n".join("- {str} "(x) for x in ttokens)
+                msg = f"Cannot invoke %r\nwith {len(ttokens} tokens:\n{b}.", s)
                 raise_wrapped(TypeError, e, msg)
         except DPSyntaxError as e:
             if e.where is None:
@@ -149,7 +149,7 @@ def spa(x, b):
     bb = wheredecorator(b)
     @parse_action
     def p(tokens, loc, s):
-        #print('spa(): parsing %s %r %r %r ' % (x, tokens, loc, s))
+        #print(f"spa(): parsing {x} %r %r %r ")
         res = bb(tokens, loc, s)
         # if we are here, then it means the parse was successful
         # we try again to get loc_end
@@ -303,8 +303,8 @@ def translate_where(where0, string):
     nlines0 = len(where0.string.split('\n'))
     if nlines != nlines0:
         msg = 'I expected they have the same lines.'
-        msg += '\n         string (%d lines): %r' % (nlines, string)
-        msg += '\n  where0.string (%d lines): %r' % (nlines0, where0.string)
+        msg += f"\n         string ({nlines} lines): %r"
+        msg += f"\n  where0.string ({nlines0} lines): %r"
         raise_desc(DPInternalError, msg)
     
     string0 = where0.string
@@ -388,13 +388,13 @@ def parse_wrap(expr, string):
         msg = 'This should not throw a DPSemanticError'
         raise_wrapped(DPInternalError, e, msg, exc=sys.exc_info()) 
     except RuntimeError as e:
-        msg = 'RuntimeError %s while parsing string.' % (type(e).__name__)
+        msg = f"RuntimeError {type(e} while parsing string.".__name__)
         msg += '\n' + indent(string, 'string: ')
         compact = 'maximum recursion depth' in str(e)
 #         compact = False # XXX
         raise_wrapped(DPInternalError, e, msg, compact=compact)
     except BaseException as e:
-        msg = 'Unexpected exception %s while parsing string.' % (type(e).__name__)
+        msg = f"Unexpected exception {type(e} while parsing string.".__name__)
         msg += '\n' + indent(string, 'string: ')
         raise_wrapped(DPInternalError, e, msg)
 

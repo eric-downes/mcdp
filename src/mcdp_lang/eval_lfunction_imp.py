@@ -193,7 +193,7 @@ def eval_lfunction_variableref(lf, context):
 
     s = dummy_ndp.get_rnames()[0]
     
-    msg = ('Please use the more precise form "required %s" rather than simply "%s".'
+    msg = (f"Please use the more precise form "required {s}" rather than simply "".'
            % (lf.name, lf.name))
     warn_language(lf, MCDPWarnings.LANGUAGE_REFERENCE_OK_BUT_IMPRECISE, msg, context)
 
@@ -231,7 +231,7 @@ def eval_lfunction_FValueMinusN(lf, context):
     elif isinstance(F, RcompUnits):
         dp = PlusValueDP(F=F, c_value=constant.value, c_space=constant.unit)
     else:
-        msg = 'Could not create this operation with %s. ' % F
+        msg = f"Could not create this operation with {F}. "
         raise_desc(DPSemanticError, msg, F=F)
              
     return create_operation_lf(context, dp=dp, functions=[fvalue],
@@ -328,7 +328,7 @@ def get_invplus_op(context, lf, c):
         dp = MinusValueRcompDP(c.value)
     else:
         msg = ('Cannot create inverse addition operation between variable of type %s '
-               'and constant of type %s.' % (T1, T2))  
+               f"and constant of type {T1}.")  
         raise_desc(DPInternalError, msg)
 
     r2 = create_operation_lf(context, dp, functions=[lf], name_prefix='_invplusop')
@@ -348,11 +348,11 @@ def eval_lfunction_invplus_ops(fs, context):
         if all(isinstance(_, RcompUnits) for _ in Fs):
             tu = get_types_universe()
             if not tu.leq(Fs[1], Fs[0]):
-                msg = 'Inconsistent units %s and %s.' % (Fs[1], Fs[0])
+                msg = f"Inconsistent units {Fs[1]} and {Fs[0]}."
                 raise_desc(DPSemanticError, msg, Fs0=Fs[0], Fs1=Fs[1])
     
             if not tu.equal(Fs[1], Fs[0]):
-                msg = 'This case was not implemented yet. Differing units %s and %s.' % (Fs[1], Fs[0])
+                msg = f"This case was not implemented yet. Differing units {Fs[1]} and {Fs[0]}."
                 raise_desc(DPNotImplementedError, msg, Fs0=Fs[0], Fs1=Fs[1])
             
             dp = InvPlus2(R, tuple(Fs))            
@@ -424,7 +424,7 @@ def eval_lfunction_create_invmultvalue(lf, constant, context):
         R = mult_table(F1, F2)
         dp = InvMultValueDP(R, F1, constant.unit, constant.value)
     else:
-        msg = 'Cannot get InvMultValue for spaces %s and %s' % (F1, F2)
+        msg = f"Cannot get InvMultValue for spaces {F1} and {F2}"
         raise_desc(DPNotImplementedError, msg, F1=F1, F2=F2)
 
     return create_operation_lf(context, dp=dp, functions=[lf],
@@ -497,7 +497,7 @@ def eval_lfunction_newresource(lf, context):
             msg += ' Available: %s.' % ", ".join(context.rnames)
         else:
             msg += ' No resources declared so far.'
-        # msg += '\n%s' % str(e)
+        # msg += f"\n{str}"(e)
         raise DPSemanticError(msg, where=lf.where)
 
     return context.make_function(get_name_for_res_node(rname),

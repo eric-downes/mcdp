@@ -148,8 +148,7 @@ def describe_interface(ndp):
     ftypes = ndp.get_ftypes(fnames)
     rnames = ndp.get_rnames()
     rtypes = ndp.get_rtypes(rnames)
-    return ("fnames: %s\nftypes: %s\nrnames: %s\nrtypes: %s" % 
-            (fnames, ftypes, rnames, rtypes))
+    return (f"fnames: {fnames}\nftypes: {ftypes}\nrnames: {rnames}\nrtypes: {rtypes}")
 
 
 

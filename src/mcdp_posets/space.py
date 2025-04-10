@@ -109,4 +109,4 @@ class Map(object, metaclass=ABCMeta):
     @abstractmethod
     def repr_map(self, letter):  # @UnusedVariable
         """ Returns a string of the type <letter> |-> f(<letter>) """
-        #return '(undef for %s)' % type(self).__name__ 
+        #return f"(undef for {type})"(self).__name__ 

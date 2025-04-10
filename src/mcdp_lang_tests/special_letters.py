@@ -94,7 +94,7 @@ def special_letters_identifiers():
 
         res = parse_wrap_check(appears, idn)
         #print('- %r %r -> %r' % (identifier, appears, res))
-#         x = '  %s %s -> %s' % (identifier.decode('utf8'),
+#         x = f"  {identifier.decode('utf8'} %s -> %s",
 #                                appears.decode('utf8'),
 #                                res.decode('utf8'))
         #print(x)

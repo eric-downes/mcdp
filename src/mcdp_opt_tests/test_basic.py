@@ -60,8 +60,8 @@ def opt_basic_1_long():
     options.remove('YoubotBase')
     options.remove('duckiebot1')
     options.remove('duckiebot1_flatten')
-    print('libraries: %s' % libnames)
-    print('options: %s' % options)
+    print(f"libraries: {libnames}")
+    print(f"options: {options}")
 
     initial_string = """
         mcdp {    
@@ -139,8 +139,8 @@ def opt_basic_1_long():
         ndp = state.get_current_ndp()
         with r.subsection('open%d' % i) as s:
             plot_ndp(s, 'open%d' % i, ndp, library)
-            msg = 'ur: %s' % state.ur
-            msg += '\n num_connection_options: %s' % state.num_connection_options
+            msg = f"ur: {state}".ur
+            msg += f"\n num_connection_options: {state}".num_connection_options
             s.text('info', msg)
 
     for i, state in enumerate(opt.abandoned):
@@ -149,8 +149,8 @@ def opt_basic_1_long():
             plot_ndp(s, 'abandoned%d' % i, ndp, library)
             msg = getattr(state, 'msg', '(no message)')
 
-            msg += '\n ur: %s' % state.ur
-            msg += '\n num_connection_options: %s' % state.num_connection_options
+            msg += f"\n ur: {state}".ur
+            msg += f"\n num_connection_options: {state}".num_connection_options
             s.text('info', msg)
 
     fn = os.path.join(outdir, 'opt_basic_1.html')
@@ -350,7 +350,7 @@ def opt_basic_7():
     _flabels, F0s, f0s = _parse_dict(min_functions, library)
 
     names = [name for name, _ndp in cndp_get_name_ndp_notfunres(ndp)]
-    print('names: %s' % names)
+    print(f"names: {names}")
 
     to_remove = list(names)
     to_remove.remove('dagu_chassis')
@@ -387,7 +387,7 @@ def opt_basic_8():
 
     outdir = 'out/opt_basic_8'
     cache = os.path.join(outdir, 'cache')
-    print('using cache %s' % cache)
+    print(f"using cache {cache}")
     library.use_cache_dir(cache)
 
     ndp = library.load_ndp('DaguChassis')

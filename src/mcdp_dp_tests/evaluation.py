@@ -11,7 +11,7 @@ from nose.tools import assert_equal
 @for_all_dps
 def check_evaluate(id_dp, dp):
     """ Test for PrimitiveDP:evaluate() """
-    print('Testing %s: %s' % (id_dp, dp))
+    print(f"Testing {id_dp}: {dp}")
     F = dp.get_fun_space()
     R = dp.get_res_space()
     UR = UpperSets(R)
@@ -189,7 +189,7 @@ def assert_check_feasible_raises(dp, *args):
         pass
     else:
         msg = 'Expected check_feasible() to raise NotFeasible.'
-        msg += 'args = %s' % str(args)
+        msg += f"args = {str}"(args)
         raise Exception(msg)
 
 def assert_check_unfeasible_raises(dp, *args):
@@ -199,7 +199,7 @@ def assert_check_unfeasible_raises(dp, *args):
         pass
     else:
         msg = 'Expected check_unfeasible() to raise Feasible.'
-        msg += 'args = %s' % str(args)
+        msg += f"args = {str}"(args)
         raise Exception(msg)
 
 def assert_feasible(dp, *args):
@@ -232,7 +232,7 @@ def print_diagram(dp, xs, ys):
             else:
                 unfeasible = True
             if feasible and unfeasible or (not feasible and not unfeasible):
-                raise Exception('Point is both feasible and unfeasible: %s %s %s' % (f, m, r))
+                raise Exception(f"Point is both feasible and unfeasible: {f} {m} {r}")
             res.append(feasible)
             # res.append(unfeasible)
 

@@ -78,8 +78,8 @@ def solve_stats(ndp, n, algo):
     resU = dpU.solve_trace(f, traceU)
     R = dp0.get_res_space()
     UR = UpperSets(R)
-    print('resultsL: %s' % UR.format(resL))
-    print('resultsU: %s' % UR.format(resU))
+    print(f"resultsL: {UR}".format(resL))
+    print(f"resultsU: {UR}".format(resU))
 
     res['traceL'] = traceL
     res['traceU'] = traceU

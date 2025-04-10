@@ -27,7 +27,7 @@ def safe_pickle_dump(value, filename, protocol=pickle.HIGHEST_PROTOCOL,
         except KeyboardInterrupt:
             raise
         except Exception:
-            msg = 'Cannot pickle object of class %s' % describe_type(value)
+            msg = f"Cannot pickle object of class {describe_type}"(value)
             logger.error(msg)
             msg = find_pickling_error(value, protocol)
             logger.error(msg)
@@ -36,7 +36,7 @@ def safe_pickle_dump(value, filename, protocol=pickle.HIGHEST_PROTOCOL,
 
 def safe_pickle_load(filename):
     """
-    Load a pickle file safely, handling Python 2/3 differences.
+    Load a pickle file safely, handling Python 2//3 differences.
     
     In Python 3, pickle.load() requires bytes-like object, not str,
     and needs to handle encoding issues when loading pickles created in Python 2.

@@ -256,7 +256,7 @@ def eval_ndp_load(r, context):
             warnings_copy_from_child_make_nested2(context, context2, r.where, msg)
             return res
     except DPSyntaxError as e:
-        msg = 'Syntax error while loading %s:' % (name)
+        msg = f"Syntax error while loading {name}:"
         s = str(e)
         print(s)
         msg += '\n\n' + indent(str(e), '   ')
@@ -434,8 +434,8 @@ def eval_ndp_catalogue(r, context):
         name = items[0].value
         expected = 1 + len(fun) + len(res)
         if len(items) != expected:
-            msg = 'Row with %d elements does not match expected of elements (%s fun, %s res)' % (len(items), len(fun), len(res))
-            # msg += ' items: %s' % str(items)
+            msg = f"Row with %d elements does not match expected of elements ({len(items} fun, %s res)", len(fun), len(res))
+            # msg += f" items: {str}"(items)
             raise DPSemanticError(msg, where=items[-1].where)
         fvalues0 = items[1:1 + len(fun)]
         rvalues0 = items[1 + len(fun):1 + len(fun) + len(res)]
@@ -447,7 +447,7 @@ def eval_ndp_catalogue(r, context):
             try:
                 tu.check_leq(Fhave.unit, F)
             except NotLeq as e:
-                msg = 'Dimensionality problem: cannot convert %s to %s.' % (Fhave.unit, F)
+                msg = f"Dimensionality problem: cannot convert {Fhave.unit} to {F}."
                 ex = lambda msg: DPSemanticError(msg, where=cell.where)
                 raise_wrapped(ex, e, msg, compact=True)
 
@@ -455,7 +455,7 @@ def eval_ndp_catalogue(r, context):
             try:
                 tu.check_leq(Rhave.unit, R)
             except NotLeq as e:
-                msg = 'Dimensionality problem: cannot convert %s to %s.' % (Rhave.unit, R)
+                msg = f"Dimensionality problem: cannot convert {Rhave.unit} to {R}."
                 ex = lambda msg: DPSemanticError(msg, where=cell.where)
                 raise_wrapped(ex, e, msg, compact=True)
 
@@ -556,7 +556,7 @@ def eval_ndp_catalogue2(r, context):
             try:
                 tu.check_leq(Fhave.unit, F)
             except NotLeq:
-                msg = 'Dimensionality problem: cannot convert %s to %s.' % (Fhave.unit, F)
+                msg = f"Dimensionality problem: cannot convert {Fhave.unit} to {F}."
                 raise DPSemanticError(msg, where=cell.where)
 #                 ex = lambda msg: DPSemanticError(msg, where=cell.where)
 #                 raise_wrapped(ex, e, msg, compact=True)
@@ -565,7 +565,7 @@ def eval_ndp_catalogue2(r, context):
             try:
                 tu.check_leq(Rhave.unit, R)
             except NotLeq:
-                msg = 'Dimensionality problem: cannot convert %s to %s.' % (Rhave.unit, R)
+                msg = f"Dimensionality problem: cannot convert {Rhave.unit} to {R}."
                 raise DPSemanticError(msg, where=cell.where)
 #                 ex = lambda msg: DPSemanticError(msg, where=cell.where)
 #                 raise_wrapped(ex, e, msg, compact=True)
@@ -675,14 +675,14 @@ def eval_ndp_catalogue3(r, context):
             try:
                 tu.check_leq(Fhave.unit, F)
             except NotLeq:
-                msg = 'Dimensionality problem: cannot convert %s to %s.' % (Fhave.unit, F)
+                msg = f"Dimensionality problem: cannot convert {Fhave.unit} to {F}."
                 raise DPSemanticError(msg, where=cell.where)
 
         for cell, Rhave, R in zip(rs, rs_evaluated, Rs):
             try:
                 tu.check_leq(Rhave.unit, R)
             except NotLeq:
-                msg = 'Dimensionality problem: cannot convert %s to %s.' % (Rhave.unit, R)
+                msg = f"Dimensionality problem: cannot convert {Rhave.unit} to {R}."
                 raise DPSemanticError(msg, where=cell.where)
 
         fvalues_ = [_.cast_value(F) for (_, F) in zip(fs_evaluated, Fs)]
@@ -759,8 +759,8 @@ def add_constraint(context, resource, function):
                 context.add_connection(c)
             except NotLeq as e:
                 msg = 'Constraint between incompatible spaces.'
-                msg += '\n  %s can be embedded in %s: %s ' % (R1, F2, tu.leq(R1, F2))
-                msg += '\n  %s can be embedded in %s: %s ' % (F2, R1, tu.leq(F2, R1))
+                msg += f"\n  {R1} can be embedded in {F2}: {tu.leq(R1, F2} ")
+                msg += f"\n  {F2} can be embedded in {R1}: {tu.leq(F2, R1} ")
                 raise_wrapped(DPSemanticError, e, msg, R1=R1, F2=F2, compact=True)
     except NotImplementedError as e: # pragma: no cover
         msg = 'Problem while creating embedding.'
@@ -791,7 +791,7 @@ def add_variable(vname, P, where, context):
     try:
         check_good_name_for_regular_node(vname)
     except ValueError as e:
-        msg = 'Invalid name: %s' % e
+        msg = f"Invalid name: {e}"
         raise DPSemanticError(msg, where=where)
 
     dp = VariableNode(P, vname)
@@ -856,9 +856,9 @@ def eval_statement_SetNameRValue(r, context):
         w = r.where
         s = w.string[w.character:w.character_end]
         alt = parse_wrap(Syntax.setname_fvalue, s)[0]
-        # print('alternative: %s' % recursive_print(alt))
+        # print(f"alternative: {recursive_print}"(alt))
     except Exception as _: # XXX: which one?
-        #print "No, it does not parse: %s" % traceback.format_exc(e)
+        #print f"No, it does not parse: {traceback}".format_exc(e)
         alt = None
         
         
@@ -1007,7 +1007,7 @@ def add_function(fname, F, context, r, repeated_ok=False):
     try:
         check_good_name_for_function(fname)
     except ValueError as e:
-        msg = 'Invalid name for functionality: %s' % e
+        msg = f"Invalid name for functionality: {e}"
         raise DPSemanticError(msg, where=r.where)
 
     if fname in context.fnames:
@@ -1026,7 +1026,7 @@ def add_resource(rname, R, context, r, repeated_ok=False):
     try:
         check_good_name_for_resource(rname)
     except ValueError as e:
-        msg = 'Invalid name for resource: %s' % e
+        msg = f"Invalid name for resource: {e}"
         raise DPSemanticError(msg, where=r.where)
 
     if rname in context.rnames:
@@ -1317,7 +1317,7 @@ def fix_functions_with_multiple_connections(context):
         fnames = []
         rname = '_a'
         for i, c in enumerate(its):
-            fn = '_%s_%d' % (fname, i)
+            fn = f"_{fname}_{i}"
             fnames.append(fn)
             c2 = Connection(dp1=c.dp1, s1=c.s1, dp2=new_name, s2=fn)
             new_connections.append(c2)
@@ -1350,7 +1350,7 @@ def fix_resources_with_multiple_connections(context):
         new_connections = []
         rnames = []
         for i, c in enumerate(its):
-            rn = '_%s_%d' % (rname, i)
+            rn = f"_{rname}_{i}"
             rnames.append(rn)
             c2 = Connection(dp1=new_name, s1=rn, dp2=c.dp2, s2=c.s2)
             new_connections.append(c2)

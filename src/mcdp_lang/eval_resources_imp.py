@@ -189,7 +189,7 @@ def eval_rvalue_VariableRef(rvalue, context):
 
     s = dummy_ndp.get_rnames()[0]
     
-    msg = ('Please use the more precise form "provided %s" rather than simply "%s".'
+    msg = (f"Please use the more precise form "provided {s}" rather than simply "".'
            % (rvalue.name, rvalue.name))
     warn_language(rvalue, MCDPWarnings.LANGUAGE_REFERENCE_OK_BUT_IMPRECISE, msg, context)
 
@@ -230,7 +230,7 @@ def eval_rvalue_approx_u(r, context):
         tu.check_leq(step.unit, R)
     except NotLeq as e:
         msg = ('The step is specified in a unit (%s), which is not compatible '
-               'with the resource (%s).' % (step.unit, R))
+               f"with the resource ({step.unit}).")
         raise_wrapped(DPSemanticError, e, msg, compact=True)
 
     stepu = step.cast_value(R)
@@ -269,13 +269,13 @@ def eval_rvalue_approx_step(r, context):
         tu.check_leq(step.unit, R)
     except NotLeq:
         msg = ('The step is specified in a unit (%s), which is not compatible '
-               'with the resource (%s).' % (step.unit, R))
+               f"with the resource ({step.unit}).")
         raise_desc(DPSemanticError, msg)
 
     stepu = express_value_in_isomorphic_space(S1=step.unit, s1=step.value, S2=R)
 
     if not isinstance(R, (RcompUnits)):
-        msg = 'approx() not implemented for %s.'%R
+        msg = f"approx() not implemented for {R}."
         raise_desc(DPNotImplementedError, msg)
         
     dp = makeLinearCeilDP(R, stepu)

@@ -149,7 +149,7 @@ a
     for c in range(len(s)+1):
         line, col = line_and_col(c, s)
         c2 = location(line, col, s)
-        print('c = %2d line = %2d col = %s c2 = %s' % (c, line, col ,c2))
+        print(f"c = %2d line = %2d col = {c} c2 = {line}")
         assert c == c2, (c, line, col, c2)
 
 

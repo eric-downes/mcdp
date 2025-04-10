@@ -86,7 +86,7 @@ def invmult2_check2():
             pylab.axis((-0.1, 1.1, -0.1, 1.1))
 
     fn = 'out/invmult2_check2.html'
-    print('writing to %s' % fn)
+    print(f"writing to {fn}")
     r.to_html(fn)
 
     for urU in resU:
@@ -104,8 +104,8 @@ def invmult2_check2():
         try:
             UR.check_leq(ur1, ur0)
         except NotLeq:
-            print('ur[%s]: %s ' % (i, UR.format(ur0)))
-            print('ur[%s]: %s ' % (i + 1, UR.format(ur1)))
+            print(f"ur[{i}]: {UR.format(ur0} "))
+            print(f"ur[{i + 1}]: {UR.format(ur1} "))
             raise Exception()
 
     # check resL is INCREASING
@@ -116,8 +116,8 @@ def invmult2_check2():
             UR.check_leq(ur0, ur1)
         except NotLeq:
             print('resL is not INCREASING')
-            print('ur[%s]: %s x' % (i, UR.format(ur0)))
-            print('ur[%s]: %s x ' % (i + 1, UR.format(ur1)))
+            print(f"ur[{i}]: {UR.format(ur0} x"))
+            print(f"ur[{i + 1}]: {UR.format(ur1} x "))
             raise
             raise Exception('resL is not INCREASING')
 
@@ -191,7 +191,7 @@ def invmult2_check3():
             pylab.axis((-0.1, 10.1, -0.1, 10.1))
 
     fn = 'out/invmult2_check3.html'
-    print('writing to %s' % fn)
+    print(f"writing to {fn}")
     r.to_html(fn)
 
     for urU in resU:
@@ -214,8 +214,8 @@ def invmult2_check3():
         try:
             UR.check_leq(ur1, ur0)
         except NotLeq:
-            print('ur[%s]: %s ' % (i, UR.format(ur0)))
-            print('ur[%s]: %s ' % (i + 1, UR.format(ur1)))
+            print(f"ur[{i}]: {UR.format(ur0} "))
+            print(f"ur[{i + 1}]: {UR.format(ur1} "))
             raise Exception('resU is not DECREASING')
 
     # check resL is INCREASING
@@ -226,8 +226,8 @@ def invmult2_check3():
             UR.check_leq(ur0, ur1)
         except NotLeq:
             print('resL is not INCREASING')
-            print('ur[%s]: %s x' % (i, UR.format(ur0)))
-            print('ur[%s]: %s x ' % (i + 1, UR.format(ur1)))
+            print(f"ur[{i}]: {UR.format(ur0} x"))
+            print(f"ur[{i + 1}]: {UR.format(ur1} x "))
             raise
             raise Exception('resL is not INCREASING')
 

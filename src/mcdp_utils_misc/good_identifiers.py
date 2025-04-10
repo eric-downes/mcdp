@@ -11,7 +11,7 @@ def is_good_plain_identifier(x):
 def assert_good_plain_identifier(x, for_what=None):
     if not is_good_plain_identifier(x):
         if for_what is not None:
-            msg = 'This is not a good identifier for %s: "%s".' % (for_what, x)
+            msg = f"This is not a good identifier for {s}: "".' % (for_what, x)
         else:
             msg = 'This is not a good identifier: "%s".' % x
         raise ValueError(msg)

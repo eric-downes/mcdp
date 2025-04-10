@@ -174,7 +174,7 @@ mcdp {
     dp = ndp.get_dp()
     for i in range(6):
         res = dp.solve(i)
-        print('%2d: %s' % (i, res))
+        print(f"%2d: {i}")
     
 
 @comptest

@@ -1532,6 +1532,6 @@ class Syntax(object):
 for x, expr in Syntax.__dict__.items():  # @UndefinedVariable
     #print x, type(expr)
     if isinstance(expr, ParseExpression):
-        #print('setting name %s' % expr)
+        #print(f"setting name {expr}")
         expr.setName(x)
 

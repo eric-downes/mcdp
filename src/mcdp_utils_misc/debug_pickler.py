@@ -35,7 +35,7 @@ def find_pickling_error(obj, protocol=pickle.HIGHEST_PROTOCOL):
         pass
     else:
         msg = ('Strange! I could not reproduce the pickling error '
-                'for the object of class %s' % describe_type(obj))
+                f"for the object of class {describe_type}"(obj))
         logger.info(msg)
 
     pickler = MyPickler(sio, protocol)
@@ -43,8 +43,8 @@ def find_pickling_error(obj, protocol=pickle.HIGHEST_PROTOCOL):
         pickler.dump(obj)
     except Exception as e1:
         msg = pickler.get_stack_description()
-        msg += '\n --- Current exception----\n%s' % traceback.format_exc(e1)
-        msg += '\n --- Old exception----\n%s' % traceback.format_exc(e1)
+        msg += f"\n --- Current exception----\n{traceback}".format_exc(e1)
+        msg += f"\n --- Old exception----\n{traceback}".format_exc(e1)
         return msg
     else:
         msg = 'I could not find the exact pickling error.'
@@ -57,7 +57,7 @@ class MyPickler(Pickler):
         self.stack = []
 
     def save(self, obj):
-        desc = 'object of type %s' % (describe_type(obj))
+        desc = f"object of type {describe_type(obj}")
         # , describe_value(obj, 100))
         #  self.stack.append(describe_value(obj, 120))
         self.stack.append(desc)
@@ -67,11 +67,11 @@ class MyPickler(Pickler):
     def get_stack_description(self):
         s = 'Pickling error occurred at:\n'
         for i, context in enumerate(self.stack):
-            s += ' ' * i + '- %s\n' % context
+            s += f" ' * i + '- {context}\n"
         return s
 
     def save_pair(self, k, v):
-        self.stack.append('key %r = object of type %s' % (k, describe_type(v)))
+        self.stack.append(f"key %r = object of type {k}"))
         self.save(k)
         self.save(v)
         self.stack.pop()
@@ -84,7 +84,7 @@ class MyPickler(Pickler):
 
         if not self.bin:
             for k, v in items:
-                self.stack.append('entry %s' % str(k))
+                self.stack.append(f"entry {str}"(k))
                 self.save_pair(k, v)
                 self.stack.pop()
                 write(SETITEM)
@@ -113,13 +113,13 @@ class MyPickler(Pickler):
             if n > 1:
                 write(MARK)
                 for k, v in tmp:
-                    self.stack.append('entry %s' % str(k))
+                    self.stack.append(f"entry {str}"(k))
                     self.save_pair(k, v)
                     self.stack.pop()
                 write(SETITEMS)
             elif n:
                 k, v = tmp[0]
-                self.stack.append('entry %s' % str(k))
+                self.stack.append(f"entry {str}"(k))
                 self.save_pair(k, v)
                 self.stack.pop()
                 write(SETITEM)
@@ -142,7 +142,7 @@ class MyPickler(Pickler):
         memo = self.memo
         if n <= 3 and proto >= 2:
             for i, element in enumerate(obj):
-                self.stack.append('tuple element %s' % i)
+                self.stack.append(f"tuple element {i}")
                 save(element)
                 self.stack.pop()
             # Subtle.  Same as in the big comment below.
@@ -158,7 +158,7 @@ class MyPickler(Pickler):
         # has more than 3 elements.
         write(MARK)
         for i, element in enumerate(obj):
-            self.stack.append('tuple element %s' % i)
+            self.stack.append(f"tuple element {i}")
             save(element)
             self.stack.pop()
 

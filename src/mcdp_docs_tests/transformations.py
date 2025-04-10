@@ -21,7 +21,7 @@ def tryit(s, write_to=None, forbid=[]):
             doc = get_minimal_document(s2, add_manual_css=True)
             with open(write_to, 'wb') as f:
                 f.write(doc)
-            print('written to %s' % write_to)
+            print(f"written to {write_to}")
         
     tests = {
      'doctype': not 'DOCTYPE' in s2,
@@ -44,10 +44,10 @@ def tryit(s, write_to=None, forbid=[]):
         if not passed:
             summary[level] += 1
         mark = '✓' if passed else 'no'
-        msg += '\n %20s : %s' % (k, mark)
+        msg += f"\n %20s : {k}"
     
     if summary['error']:
-        msg += '\nSee output in %s'%  (write_to)
+        msg += f"\nSee output in {write_to}"
         raise_desc(Exception, msg)
     
     return s2      

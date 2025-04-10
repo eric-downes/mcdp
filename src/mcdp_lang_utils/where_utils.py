@@ -37,8 +37,7 @@ def line_and_col(loc, strg):
         return last_line, last_char  
         
     if loc > len(strg):
-        msg = ('Invalid loc = %d for s of len %d (%r)' % 
-                         (loc, len(strg), strg))
+        msg = (f"Invalid loc = {loc} for s of len {len(strg} (%r)", strg))
         raise ValueError(msg)
     
     res_line = 0

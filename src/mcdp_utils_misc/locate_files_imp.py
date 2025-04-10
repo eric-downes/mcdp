@@ -88,15 +88,15 @@ def locate_files(directory, pattern, followlinks=True,
         for norm in filenames:
             real = os.path.realpath(norm)
             real2norm[real].append(norm)
-            # print('%s -> %s' % (real, norm))
+            # print(f"{real} -> {norm}")
 
         for k, v in real2norm.items():
             if len(v) > 1:
-                msg = 'In directory:\n\t%s\n' % directory
+                msg = f"In directory:\n\t{directory}\n"
                 msg += 'I found %d paths that refer to the same file:\n'
                 for n in v:
-                    msg += '\t%s\n' % n
-                msg += 'refer to the same file:\n\t%s\n' % k
+                    msg += f"\t{n}\n"
+                msg += f"refer to the same file:\n\t{k}\n"
                 msg += 'I will silently eliminate redundancies.'
                 logger.warning(v)
 

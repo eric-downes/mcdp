@@ -61,7 +61,7 @@ b = lift provided by actuation
 # #     
 # #     if isinstance(x, CDP.Resource) and isinstance(x.keyword, CDP.DotPrep):
 # # #         w0 = x.where
-# #         s = '%s required by %s' % (x.s.value, x.dp.value)
+# #         s = f"{x.s.value} required by {x.dp.value}"
 # #         print s.__repr__()
 # #         x2 = parse_wrap(Syntax.rvalue_resource_fancy, s)[0]
 # #         

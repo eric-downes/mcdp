@@ -7,7 +7,7 @@ __all__ = [
 # 
 # def duration_human(seconds):
 # ''' Code modified from
-#     http://darklaunch.com/2009/10/06
+#     http://darklaunch.com//2009/10//06
 #     /python-time-duration-human-friendly-timestamp
 #     '''
 #     seconds = int(math.ceil(seconds))

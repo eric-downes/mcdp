@@ -35,9 +35,9 @@ def check_compose():
     x = dpconnect(dict(actuation=actuation, times=times), [c])
 
     print('WE have obtained x')
-    print('x = %s' % x)
-    print('x fun: %s' % x.get_dp().get_fun_space())
-    print('x res: %s' % x.get_dp().get_res_space())
+    print(f"x = {x}")
+    print(f"x fun: {x}".get_dp().get_fun_space())
+    print(f"x res: {x}".get_dp().get_res_space())
 
     # "battery.capacity >= x.energy"
     c = Connection('x', 'energy', 'battery', 'capacity')
@@ -182,8 +182,8 @@ def check_compose2_loop2():
 
     funsp = dp.get_fun_space()
     ressp = dp.get_res_space()
-    print('funsp: %s' % funsp)
-    print('ressp: %s' % ressp)
+    print(f"funsp: {funsp}")
+    print(f"ressp: {ressp}")
     assert funsp == R_Time, funsp
     assert ressp == R_Weight_g, ressp
 
@@ -223,8 +223,8 @@ def check_compose2_generic():
 
 
 def check_same_spaces(dp1, dp2):
-#     print('dp1: %s' % dp1)
-#     print('dp2: %s' % dp2)
+#     print(f"dp1: {dp1}")
+#     print(f"dp2: {dp2}")
     F1 = dp1.get_fun_space()
     R1 = dp1.get_res_space()
     F2 = dp2.get_fun_space()
