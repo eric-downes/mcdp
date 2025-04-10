@@ -101,7 +101,7 @@ if False:
         method = poset_minima_n2
         N2w = wrap_with_counts(N2)
         r = stats_for_poset_minima(N2w, Ps, method, maxleq=None)
-        print r
+        print(r)
 
 #
 # def get_random_antichain(n, point_generation, leq):

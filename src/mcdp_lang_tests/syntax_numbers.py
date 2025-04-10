@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from nose.tools import assert_equal
-from numpy.testing.utils import assert_allclose
+from .nose_compat import assert_equal
+try:
+    from numpy.testing.utils import assert_allclose  # Old numpy versions
+except ImportError:
+    from numpy.testing import assert_allclose  # Newer numpy versions
 
 from comptests.registrar import comptest, comptest_fails
 from mcdp_lang import parse_ndp
@@ -193,7 +196,7 @@ mcdp {
     dp = ndp.get_dp()
 
     r = dp.solve(0.0)
-    print r
+    print(r)
     limit = list(r.minimals)[0]
 
     # 1 MPH = 0.44704 m / s
@@ -241,9 +244,9 @@ mcdp {
     d >= a + b
 }
     """)
-    print ndp.repr_long()
+    print(ndp.repr_long())
     dp = ndp.get_dp()
-    print dp.repr_long()
+    print(dp.repr_long())
     cases = (
       ((0.0, 1.0), (ONE_MPH_IN_M_S, 1.0)),
       ((1.0, 0.0), (1.0, 1.0 / ONE_MPH_IN_M_S)),

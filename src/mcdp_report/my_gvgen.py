@@ -209,7 +209,7 @@ class GvGen(object):
 
     def debug(self):
         for e in self.__nodes:
-            print "element = " + str(e['id'])
+            print("element = " + str(e['id']))
 
     def collectLeaves(self, parent):
         """
@@ -378,9 +378,9 @@ class GvGen(object):
 
     def tree_debug(self, level, node, children):
         if children:
-            print "(level:%d) Eid:%d has children (%s)" % (level,node['id'],str(children))
+            print("(level:%d) Eid:%d has children (%s)" % (level,node['id'],str(children)))
         else:
-            print "Eid:"+str(node['id'])+" has no children"
+            print("Eid:"+str(node['id'])+" has no children")
 
     #
     # Core function that outputs the data structure tree into dot language
@@ -393,11 +393,11 @@ class GvGen(object):
 #         print('%stree(level %s, ID %s, %s)' % ('  ' * level, level, node['id'],
 #                                                 len(children) if children else 'no children'))
         if debug:
-            print "/* Grabed node = %s*/" % str(node['id'])
+            print("/* Grabed node = %s*/" % str(node['id']))
 
         if node['lock'] == 1:            # The node is locked, nothing should be printed
             if debug:
-                print "/* The node (%s) is locked */" % str(node['id'])
+                print("/* The node (%s) is locked */" % str(node['id']))
 
             if self.__opened_braces:
                 self.fd.write(level * self.padding_str)
@@ -438,7 +438,7 @@ class GvGen(object):
                     last_cluster_str = str(last_cluster['id'])
                 else:
                     last_cluster_str = 'None'
-                print "/* e[parent] = %s, last_cluster = %s, last_level = %d, opened_braces: %s */" % (parent_str, last_cluster_str,last_level,str(self.__opened_braces))
+                print("/* e[parent] = %s, last_cluster = %s, last_level = %d, opened_braces: %s */" % (parent_str, last_cluster_str,last_level,str(self.__opened_braces)))
 
             # Write children/parent with properties
             if node['parent']:

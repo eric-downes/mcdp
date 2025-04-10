@@ -109,8 +109,8 @@ def who_from_commit(commit):
     assert isinstance(author, Actor)
     assert isinstance(committer, Actor)
     
-    print author.__repr__()
-    print committer.__repr__()
+    print(author.__repr__())
+    print(committer.__repr__())
 
     author_email = author.email
     if '@' in author_email:

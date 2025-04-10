@@ -1,5 +1,15 @@
 # -*- coding: utf-8 -*-
 import collections
+try:
+    from collections.abc import Sequence, MutableMapping, Mapping, Set, MutableSet, Iterable
+except ImportError:
+    # Python 2 compatibility
+    Sequence = Sequence
+    MutableMapping = MutableMapping
+    Mapping = Mapping
+    Set = Set
+    MutableSet = MutableSet
+    Iterable = Iterable
 import itertools
 
 from contracts import contract
@@ -21,7 +31,7 @@ class PosetProduct(SpaceProduct, Poset):
 
     @contract(subs='seq($Poset)')
     def __init__(self, subs):
-        if not isinstance(subs, collections.Iterable):
+        if not isinstance(subs, Iterable):
             msg = 'PosetProduct expects a sequence of Posets.'
             raise_desc(ValueError, msg, subs=subs)
         subs = tuple(subs)

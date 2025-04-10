@@ -100,7 +100,7 @@ class PlotterUR(Plotter):
         self.check_plot_space(space)
 
         minimals = [self._get_screen_coords(_, axis) for _ in value.minimals]
-        print 'minimals',minimals
+        print('minimals',minimals)
         R2 = PosetProduct((Rcomp(), Rcomp()))
         v = R2.Us(minimals)
 

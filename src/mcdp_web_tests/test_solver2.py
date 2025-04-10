@@ -83,7 +83,7 @@ def test_lib_creation1(env):
     ui_state['area_R'] = '12 W'
     
     res2 = view(context=mocked2.context, request=mocked2.request)
-    print res2
+    print(res2)
     if app.exceptions:
         msg = 'Found these exceptions:'
         msg += '\n'.join(app.exceptions)

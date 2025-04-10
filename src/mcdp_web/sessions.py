@@ -109,7 +109,7 @@ class Session(object):
                 self.shelves_available[sname] = shelf
             else:
                 #print('hiding shelf %r from %r' % (sname, user))
-                print shelf.get_acl()
+                print(shelf.get_acl())
         
         #print('shelves all: %s' % list(self.shelves_all))
         #print('shelves available: %s' % list(self.shelves_available))

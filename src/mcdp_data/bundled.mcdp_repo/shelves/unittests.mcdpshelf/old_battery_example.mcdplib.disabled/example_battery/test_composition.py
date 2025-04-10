@@ -168,7 +168,7 @@ def check_compose2_loop2():
 
     y = dploop0(x, 'battery_weight', 'weight')
 
-    print y.desc()
+    print(y.desc())
 
     assert y.get_fnames() == ['mission_time'], y.get_fnames()
     assert y.get_rnames() == ['battery_weight'], y.get_rnames()
@@ -208,7 +208,7 @@ def check_compose2_generic():
     y = dpgraph(dict(actuation=actuation, times=times, battery=battery),
               [c1, c2, c3], split=[])
 
-    print y.desc()
+    print(y.desc())
 
     assert y.get_fnames() == ['mission_time'], y.get_fnames()
     assert y.get_rnames() == [], y.get_rnames()

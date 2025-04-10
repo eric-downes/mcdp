@@ -14,7 +14,7 @@ for f in files:
 
     cwd = '.'
     cmd = ['python', '-c', 'import %s' % mod]
-    print "python -c 'import %s'" % mod
+    print("python -c 'import %s'" % mod)
     system_cmd_result(
             cwd, cmd,
             display_stdout=False,

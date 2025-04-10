@@ -93,8 +93,8 @@ def report(res):
         ieee_spines_zoom3(pylab)
         total_massL = np.array(list(get_value(dataL, 'total_mass')))
         total_massU = np.array(list(get_value(dataU, 'total_mass')))
-        print endurance
-        print total_massL, total_massU
+        print(endurance)
+        print(total_massL, total_massU)
         pylab.plot(endurance, total_massL, **LOWER2)
         pylab.plot(endurance, total_massU, **UPPER2)
         set_axis_colors(pylab, color_functions, color_resources)

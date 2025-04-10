@@ -66,9 +66,9 @@ def to_be_updated_check_evaluation():
     assert_equal(dp.get_res_space(), SpaceProduct(()))
     assert_equal(dp.get_fun_space(), SpaceProduct(()))
 
-    print dp.solve(())  # = ↑{⟨⟩}
+    print(dp.solve(())  # = ↑{⟨⟩})
     imps = dp.get_implementations_f_r((), ())
-    print imps
+    print(imps)
     # here, (x,y) => (x,y,y,y) actually I'm not sure
     assert_feasible(dp, (), (0.0, 0.0, 0.0, 0.0), ())
     assert_feasible(dp, (), (1.0, 1.0, 1.0, 1.0), ())
@@ -133,7 +133,7 @@ def to_be_updated_check_evaluation2():
     M = dp.get_imp_space()
 
     Is = dp.get_implementations_f_r((), ())
-    print Is
+    print(Is)
 
     assert_equal(M, SpaceProduct((R_dimensionless,) * 4))
     assert_equal(dp.get_res_space(), SpaceProduct(()))

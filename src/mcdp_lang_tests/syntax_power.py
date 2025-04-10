@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from nose.tools import assert_equal
+from .nose_compat import assert_equal
 
 from comptests.registrar import comptest
 from mcdp_dp.dp_transformations import get_dp_bounds
@@ -89,9 +89,9 @@ def check_power4():
 
 @comptest
 def check_power5():
-    print parse_wrap_check("pow(lift, 2/1)", Syntax.rvalue_power_expr)
-    print parse_wrap_check("pow(lift, 2/1)", Syntax.rvalue)
-    print parse_wrap_check("power >= pow(lift, 2/1)", Syntax.constraint_expr_geq)
+    print(parse_wrap_check("pow(lift, 2/1)", Syntax.rvalue_power_expr))
+    print(parse_wrap_check("pow(lift, 2/1)", Syntax.rvalue))
+    print(parse_wrap_check("power >= pow(lift, 2/1)", Syntax.constraint_expr_geq))
 
 
     assert_semantic_error("""

@@ -81,7 +81,7 @@ def go():
         v['cycles'] = '%s []'% v['cycles']
         s2 = string.Template(template).substitute(v)
 
-        print s2
+        print(s2)
         # ndp = parse_ndp(s2)
         model_name = 'Battery_%s' % name
         fname = model_name + '.mcdp'
@@ -92,7 +92,7 @@ def go():
 
         summary += '\n%10s %10s %10s %10s  %s' % (name, v['specific_energy'], v['specific_cost'],
             v['cycles'], v['desc'])
-    print summary
+    print(summary)
     with open('summary.txt', 'w') as f:
         f.write(summary)
     ss = """

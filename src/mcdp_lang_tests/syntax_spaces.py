@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from contracts.utils import indent
-from nose.tools import assert_equal, assert_raises
+from .nose_compat import assert_equal, assert_raises
 
 from comptests.registrar import comptest, run_module_tests, comptest_fails
 from mcdp.exceptions import DPSemanticError
@@ -252,7 +252,7 @@ mcdp {
     variable a_1_last [dimensionless]
 }"""
     suggestions = get_suggestions_ndp(s)
-    if suggestions: print suggestions
+    if suggestions: print(suggestions)
     assert_equal(0, len(suggestions)) 
     
 @comptest
@@ -264,7 +264,7 @@ mcdp {
     num_replacements = 0
 }"""
     suggestions = get_suggestions_ndp(s)
-    if suggestions: print suggestions
+    if suggestions: print(suggestions)
     assert_equal(0, len(suggestions)) 
 
 @comptest
@@ -290,7 +290,7 @@ mcdp {
     variable a₁ [dimensionless]
 }"""
     suggestions = get_suggestions_ndp(s)
-    if suggestions: print suggestions
+    if suggestions: print(suggestions)
     assert_equal(0, len(suggestions))
 
 @comptest
@@ -301,7 +301,7 @@ mcdp {
     variable α [dimensionless]
 }"""
     suggestions = get_suggestions_ndp(s)
-    if suggestions: print suggestions
+    if suggestions: print(suggestions)
     assert_equal(0, len(suggestions))
 
 

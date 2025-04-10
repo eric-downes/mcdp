@@ -23,7 +23,7 @@ from mcdp.exceptions import (DPInternalError, DPSemanticError, DPSyntaxError,
 from .fix_whitespace_imp import fix_whitespace
 from .namedtuple_tricks import get_copy_with_where, recursive_print
 from .parts import CDPLanguage
-from .pyparsing_bundled import ParseException, ParseFatalException
+from .pyparsing_compat import ParseException, ParseFatalException
 from .utils import isnamedtupleinstance, parse_action
 from .utils_lists import make_list, unwrap_list
 from .find_parsing_el import find_parsing_element
@@ -322,13 +322,18 @@ def translate_where(where0, string):
 
 def parse_wrap(expr, string):
     from .refinement import namedtuple_visitor_ext
+    from mcdp.py_compatibility import PY2, string_types
     
-    if isinstance(string, unicode):
-        msg = 'The string is unicode. It should be a str with utf-8 encoding.'
-        msg += '\n' + string.encode('utf-8').__repr__()
-        raise ValueError(msg)
-    
-    check_isinstance(string, bytes)
+    if PY2:
+        # Python 2 compatibility
+        if isinstance(string, unicode):
+            msg = 'The string is unicode. It should be a str with utf-8 encoding.'
+            msg += '\n' + string.encode('utf-8').__repr__()
+            raise ValueError(msg)
+        check_isinstance(string, bytes)
+    else:
+        # Python 3
+        check_isinstance(string, string_types)
 
     # Nice trick: the remove_comments doesn't change the number of lines
     # it only truncates them...

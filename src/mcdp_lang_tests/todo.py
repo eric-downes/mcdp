@@ -105,7 +105,7 @@ def check_poset_bottom_checks():
         parse_poset(s)
         assert False, 'Should have detected the inconsistency'
     except DPSemanticError as e:
-        print str(e)
+        print(str(e))
         return
     
     

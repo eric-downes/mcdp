@@ -34,7 +34,7 @@ def go():
     for name, v in types.items():
         s2 = string.Template(template).substitute(v) 
 
-        print s2
+        print(s2)
         # ndp = parse_ndp(s2)
         model_name = 'actuation_%s' % name
         fname = model_name + '.mcdp'

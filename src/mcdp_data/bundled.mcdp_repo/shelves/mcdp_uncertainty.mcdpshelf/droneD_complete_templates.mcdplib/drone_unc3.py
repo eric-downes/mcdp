@@ -100,7 +100,7 @@ def report(data):
     r = Report()
 
     num = np.array(data['n'])
-    print num
+    print(num)
 
     print('reading iterations')
     num_iterations_L = [get_num_iterations(res_i['traceL']) for res_i in data['results']]
@@ -118,10 +118,10 @@ def report(data):
 
     num_iterations = np.array(num_iterations_L) + np.array(num_iterations_U)
 
-    print res_L
-    print res_U
-    print num_iterations_L
-    print num_iterations_U
+    print(res_L)
+    print(res_U)
+    print(num_iterations_L)
+    print(num_iterations_U)
 
 
     print('Plotting')
@@ -173,7 +173,7 @@ def report(data):
 
         valid = np.isfinite(res_U)
         invalid = np.logical_not(valid)
-        print valid
+        print(valid)
 
         res_L_valid = res_L[valid]
         res_U_valid = res_U[valid]

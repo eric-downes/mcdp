@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from nose.tools import assert_equal
+from .nose_compat import assert_equal
 
 from comptests.registrar import comptest, run_module_tests
 from mcdp_lang.dealing_with_special_letters import subscripts,\

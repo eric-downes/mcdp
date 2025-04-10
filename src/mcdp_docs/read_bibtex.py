@@ -72,4 +72,4 @@ def extract_bibtex_blocks(soup):
 if __name__ == '__main__':
     
     b = get_bibliography()
-    print b
+    print(b)

@@ -8,6 +8,9 @@ import sys
 import inspect
 import io
 
+# Python version check
+PY2 = sys.version_info[0] == 2
+
 # String types
 string_types = (str,)
 integer_types = (int,)

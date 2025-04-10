@@ -258,7 +258,7 @@ def eval_ndp_load(r, context):
     except DPSyntaxError as e:
         msg = 'Syntax error while loading %s:' % (name)
         s = str(e)
-        print s
+        print(s)
         msg += '\n\n' + indent(str(e), '   ')
         raise DPSemanticError(msg, where=arg.where)
         #raise_wrapped(DPSemanticError, e, msg, compact=True)

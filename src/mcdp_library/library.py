@@ -284,14 +284,14 @@ class MCDPLibrary(object):
 
                 return result
             except MCDPExceptionWithWhere as e:
-                logger.error('extend_with_filename(%r): seen %s' % (realpath, e))
-                _type, _value, traceback = sys.exc_info()
+                logger.error(f'extend_with_filename({realpath!r}): seen {e}')
+                _type, _value, tb = sys.exc_info()
                 if e.where is None or e.where.filename is None:
                     if realpath is not None:
                         e = e.with_filename(realpath)
                     else:
                         e = e
-                raise e, None, traceback
+                raise e.with_traceback(tb)
              
     def _generate_context_with_hooks(self):
         context = Context()

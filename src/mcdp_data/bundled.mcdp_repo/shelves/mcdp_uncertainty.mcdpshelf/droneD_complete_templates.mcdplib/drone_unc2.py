@@ -149,10 +149,10 @@ def report(data):
 
     num_iterations = np.array(num_iterations_L) + np.array(num_iterations_U)
 
-    print res_L
-    print res_U
-    print num_iterations_L
-    print num_iterations_U
+    print(res_L)
+    print(res_U)
+    print(num_iterations_L)
+    print(num_iterations_U)
 
     intervals = data['intervals']
 

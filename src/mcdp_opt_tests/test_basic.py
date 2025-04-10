@@ -184,8 +184,8 @@ def opt_basic_2():
     l1b = add_extra(l1, N, n1)
     l2b = add_extra(l2, N, n2)
 
-    print l1b
-    print l2b
+    print(l1b)
+    print(l2b)
 
     assert less_resources2(l1b, l2b)
     assert not less_resources2(l2b, l1b)
@@ -361,7 +361,7 @@ def opt_basic_7():
     for n in to_remove:
         ndp = cndp_remove_one_child(ndp, n)
 
-    print ndp
+    print(ndp)
 
 
     if len(F0s) > 1:

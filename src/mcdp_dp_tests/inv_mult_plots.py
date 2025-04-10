@@ -410,9 +410,9 @@ mcdp {
 #     UNat = UpperSets(Nat())
 
     dp = ndp.get_dp()
-    print dp
+    print(dp)
     res = dp.solve(())
-    print res.__repr__()
+    print(res.__repr__())
     One = PosetProduct(())
     U1 = UpperSets(One)
     U1.check_equal(res, One.U(()))
@@ -443,9 +443,9 @@ mcdp {
     N = Nat()
     UNat = UpperSets(N)
     dp = ndp.get_dp()
-    print dp
+    print(dp)
     res = dp.solve(())
-    print res
+    print(res)
     UNat.check_equal(res, N.U(2))
 # 
 # @comptest

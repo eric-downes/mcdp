@@ -60,7 +60,7 @@ if __name__ == '__main__':
     print('user: %s' % user)
     user.info.email = 'new email'
     user.info.groups.append('group:new-group')
-    print yaml_dump(events)
+    print(yaml_dump(events))
     
     for data_event in events:
         dm = DB.dm

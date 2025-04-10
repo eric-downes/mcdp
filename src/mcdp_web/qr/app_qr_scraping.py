@@ -39,7 +39,7 @@ def scrape(qrstring):
             r = Resource(type=str(rel), content_type=str(content_type),
                          url=str(abs_url), content=content, name=str(name))
 
-            print r.type, r.content_type, r.url, r.name, len(r.content)
+            print(r.type, r.content_type, r.url, r.name, len(r.content))
             resources.append(r)
         else:
             print('cannot parse: %s' % tag)
@@ -48,7 +48,7 @@ def scrape(qrstring):
 
 def test_scraper1():
     resources = scrape('http://minimality.mit.edu/rdg/decks/1/cards/aaa_battery.html')
-    print resources
+    print(resources)
     
 
 

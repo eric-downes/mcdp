@@ -29,8 +29,8 @@ def invmult2_check1():
     for i in [1.0, 5.0, 10.0]:
         rl = iml.solve(i)
         ru = imu.solve(i)
-        print UR.format(rl)
-        print UR.format(ru)
+        print(UR.format(rl))
+        print(UR.format(ru))
         UR.check_leq(rl, ru)
         
 
@@ -115,7 +115,7 @@ def invmult2_check2():
         try:
             UR.check_leq(ur0, ur1)
         except NotLeq:
-            print 'resL is not INCREASING'
+            print('resL is not INCREASING')
             print('ur[%s]: %s x' % (i, UR.format(ur0)))
             print('ur[%s]: %s x ' % (i + 1, UR.format(ur1)))
             raise
@@ -149,8 +149,8 @@ def invmult2_check3():
         dpU = im.get_upper_bound(n)
         dpL = im.get_lower_bound(n)
         urL = dpL.solve(f0)
-        print urL
-        print '%r' % urL.minimals
+        print(urL)
+        print('%r' % urL.minimals)
         check_minimal(urL.minimals, R)
         urU = dpU.solve(f0)
         check_minimal(urU.minimals, R)
@@ -225,7 +225,7 @@ def invmult2_check3():
         try:
             UR.check_leq(ur0, ur1)
         except NotLeq:
-            print 'resL is not INCREASING'
+            print('resL is not INCREASING')
             print('ur[%s]: %s x' % (i, UR.format(ur0)))
             print('ur[%s]: %s x ' % (i + 1, UR.format(ur1)))
             raise

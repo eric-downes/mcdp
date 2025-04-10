@@ -134,7 +134,7 @@ def format_where(w, context_before=3, mark=None, arrow=True,
         if w.line == w.line_end:
             num_highlight = printable_length_where(w)
             s += space + '~' * num_highlight + '\n'
-            space += S * (num_highlight/2)
+            space += S * (num_highlight//2)
         else:
             # cannot highlight if on different lines
             num_highlight = None

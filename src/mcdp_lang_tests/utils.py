@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from nose.tools import assert_equal
+from .nose_compat import assert_equal
 
 from comptests.registrar import register_indep
 from contracts import contract
@@ -147,7 +147,7 @@ def assert_parsable_to_connected_ndp(s , desc=None):  # @UnusedVariable
 class TestFailed(Exception):
     pass
 
-@contract(string=bytes)
+@contract(string='str')
 def parse_wrap_check(string, expr, result=None):
     check_isinstance(string, str)
     if isinstance(expr, ParsingElement):
